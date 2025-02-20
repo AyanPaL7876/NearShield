@@ -1,43 +1,44 @@
 import { StyleSheet, Image, Dimensions } from 'react-native';
-import { Link } from 'expo-router';
+import { router } from 'expo-router';
 import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Animated, { FadeIn } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 import { AntDesign } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
 
-export default function NotFoundScreen() {
+export default function LoginScreen() {
+  const handleGoogleSignIn = () => {
+    router.replace('/(tabs)/dashboard');
+  };
+
   return (
     <ThemedView style={styles.container}>
       <Animated.View 
-        entering={FadeIn.delay(200).duration(1000)}
+        entering={FadeIn.delay(500).duration(1000)}
         style={styles.content}
       >
         <Image 
-          source={require('@/assets/images/404.png')}
+          source={require('@/assets/images/loging-top-img.png')}
           style={styles.image}
           resizeMode="contain"
         />
         
-        <ThemedText style={styles.title}>Oops!</ThemedText>
+        <ThemedText style={styles.title}>Smart City</ThemedText>
         <ThemedText style={styles.subtitle}>
-          We can't seem to find the page you're looking for.
+            Safety & Emergency Response System
         </ThemedText>
 
-        <Link href="/" asChild>
-          <TouchableOpacity style={styles.button}>
-            <AntDesign name="home" size={24} color="white" style={styles.icon} />
-            <ThemedText style={styles.buttonText}>
-              Go Back Home
-            </ThemedText>
-          </TouchableOpacity>
-        </Link>
-
-        <ThemedText style={styles.errorCode}>
-          404 - Page Not Found
-        </ThemedText>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={handleGoogleSignIn}
+        >
+          <AntDesign name="google" size={24} color="white" style={styles.googleIcon} />
+          <ThemedText style={styles.buttonText}>
+            Continue with Google
+          </ThemedText>
+        </TouchableOpacity>
       </Animated.View>
     </ThemedView>
   );
@@ -56,27 +57,27 @@ const styles = StyleSheet.create({
   },
   image: {
     width: width * 0.8,
-    height: width * 0.6,
+    height: width * 0.8,
     marginBottom: 40,
   },
   title: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 12,
+    marginBottom: 8,
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 16,
     color: '#666',
-    marginBottom: 32,
-    textAlign: 'center',
-    maxWidth: width * 0.8,
+    marginBottom: 48,
   },
   button: {
     backgroundColor: '#4285F4',
     paddingVertical: 16,
-    paddingHorizontal: 32,
+    paddingHorizontal: 24,
     borderRadius: 12,
+    width: width * 0.85,
+    maxWidth: 400,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -89,18 +90,13 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 8,
   },
-  icon: {
+  googleIcon: {
     marginRight: 12,
   },
   buttonText: {
     fontSize: 18,
     fontWeight: '600',
     color: '#FFFFFF',
+    textAlign: 'center',
   },
-  errorCode: {
-    marginTop: 48,
-    fontSize: 16,
-    color: '#999',
-    fontFamily: 'monospace',
-  },
-});
+}); 

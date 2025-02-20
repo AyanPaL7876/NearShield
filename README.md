@@ -1,50 +1,98 @@
-# Welcome to your Expo app 👋
+# 🌆 Smart City - Safety & Emergency Response System
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<p align="center">
+  <i>Making cities safer through AI and community collaboration</i>
+</p>
 
-## Get started
+[![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactnative.dev/)
+[![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white)](https://expo.dev/)
+[![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)](https://firebase.google.com/)
 
-1. Install dependencies
+## 📱 Overview
 
-   ```bash
-   npm install
-   ```
+Smart City is a mobile application that enhances urban safety through AI-powered incident reporting and emergency response. The platform connects citizens with emergency services and law enforcement agencies in real-time, creating safer communities through technology.
 
-2. Start the app
+## ✨ Key Features
 
-   ```bash
-    npx expo start
-   ```
+- 🔐 **Secure Authentication**
+  - Multi-role support (Citizens, Authorities, Admins)
+  - Firebase authentication with social login
 
-In the output, you'll find options to open the app in a
+- 🚨 **Smart Incident Reporting**
+  - AI-powered severity classification
+  - Image/video upload with real-time analysis
+  - Location-based tracking
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- 🚑 **Emergency Response System**
+  - One-tap emergency assistance
+  - Real-time GPS tracking
+  - Automated dispatch and notifications
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- 📊 **Analytics Dashboard**
+  - Crime heatmaps and trend analysis
+  - Response time metrics
+  - Predictive risk assessment
 
-## Get a fresh project
+## 🛠️ Tech Stack
 
-When you're ready, run:
+- **Frontend:** React Native Expo
+- **Backend:** Firebase (Firestore, Auth, Functions)
+- **AI/ML:** OpenAI API
+- **Maps:** Google Maps Platform
+- **APIs:** Crimeometer, OpenWeatherMap, Twilio
 
+## 🚀 Getting Started
+
+1. Clone the repository
 ```bash
-npm run reset-project
+git clone https://github.com/ayanpal7876/smart-city-app
+cd smart-city-app
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Install dependencies
+```bash
+npm install
+```
 
-## Learn more
+3. Configure environment variables
+```bash
+cp .env.example .env
+# Update .env with your API keys
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+4. Start the development server
+```bash
+npx expo start
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## ⚙️ Environment Setup
 
-## Join the community
+Create a `.env` file with the following:
 
-Join our community of developers creating universal apps.
+```env
+# Firebase
+FIREBASE_API_KEY=your_key
+FIREBASE_AUTH_DOMAIN=your_domain
+FIREBASE_PROJECT_ID=your_project_id
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+# APIs
+OPENAI_API_KEY=your_key
+GOOGLE_MAPS_API_KEY=your_key
+CRIMEOMETER_API_KEY=your_key
+TWILIO_ACCOUNT_SID=your_sid
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+
+---
+
+<p align="center">
+  Made with ❤️ for safer cities
+</p>
