@@ -40,7 +40,8 @@ import {
         </View>
   
         {/* Emergency Services Section */}
-        <View style={styles.section}>
+        <View style={[styles.section , styles.boxTopRadius]}>
+        {/* <View style={styles.section}> */}
           <Text style={styles.sectionTitle}>Emergency Services</Text>
           <View style={styles.emergencyGrid}>
             <EmergencyCard
@@ -76,6 +77,7 @@ import {
             <Text style={styles.viewMoreText}>View More</Text>
           </TouchableOpacity>
         </View>
+        {/* </View> */}
   
         {/* Recent Alerts Section */}
         <View style={styles.section}>
@@ -113,24 +115,27 @@ import {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: Colors.background,
     },
     header: {
       padding: 20,
-      paddingTop: 60,
+      paddingTop: 26,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      backgroundColor: Colors.background,
+      // borderBottomEndRadius: 25,
+      // borderBottomStartRadius: 25,
     },
     greeting: {
-      fontSize: 16,
+      fontSize: 15,
       fontFamily: 'outfit',
-      color: '#666',
+      color: Colors.smallTextColor,
     },
     userName: {
-      fontSize: 24,
+      fontSize: 25,
       fontFamily: 'outfit-bold',
-      color: Colors.PRIMARY,
+      color: Colors.dark.text,
     },
     notificationButton: {
       padding: 12,
@@ -142,10 +147,16 @@ import {
       shadowRadius: 4,
     },
     section: {
-      padding: 20,
+      backgroundColor: '#fff',
+      paddingHorizontal: 20,
+    },
+    boxTopRadius: {
+      paddingVertical: 20,
+      borderTopRightRadius:25,
+      borderTopLeftRadius:25,
     },
     sectionTitle: {
-      fontSize: 20,
+      fontSize: 19,
       fontFamily: 'outfit-bold',
       marginBottom: 15,
       color: '#333',
@@ -166,13 +177,13 @@ import {
       marginBottom: 10,
     },
     emergencyTitle: {
-      fontSize: 18,
+      fontSize: 17,
       fontFamily: 'outfit-bold',
       color: 'white',
-      marginBottom: 5,
+      marginBottom: 3,
     },
     emergencyDescription: {
-      fontSize: 14,
+      fontSize: 13,
       fontFamily: 'outfit',
       color: 'white',
       opacity: 0.9,
@@ -193,24 +204,24 @@ import {
       flex: 1,
     },
     alertTitle: {
-      fontSize: 16,
+      fontSize: 15,
       fontFamily: 'outfit-bold',
       color: '#333',
     },
     alertDescription: {
-      fontSize: 14,
+      fontSize: 13,
       fontFamily: 'outfit',
       color: '#666',
     },
     viewMoreButton: {
       marginTop: 10,
       alignSelf: 'flex-end',
-      padding: 10,
+      padding: 8,
     },
     viewMoreText: {
-      fontSize: 16,
+      fontSize: 15,
       fontFamily: 'outfit-bold',
-      color: Colors.PRIMARY,
+      color: '#000',
     },
     tipCard: {
       width: 150,
@@ -224,7 +235,7 @@ import {
       borderRadius: 15,
     },
     tipTitle: {
-      fontSize: 16,
+      fontSize: 15,
       fontFamily: 'outfit-medium',
       color: '#333',
       marginTop: 10,

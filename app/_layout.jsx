@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import LoginScreen from "../components/LoginScreen";
@@ -26,6 +27,12 @@ const tokenCache = {
 };
 
 export default function RootLayout() {
+  useFonts({
+    "outfit": require("@/assets/fonts/Poppins-Regular.ttf"),
+    "outfit-medium": require("@/assets/fonts/Poppins-Medium.ttf"),
+    "outfit-bold": require("@/assets/fonts/Poppins-Bold.ttf"),
+  });
+
   const [isSplashVisible, setIsSplashVisible] = useState(true);
 
   const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
