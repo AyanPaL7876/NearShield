@@ -10,13 +10,20 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.yourcompany.smartcity"
+      "bundleIdentifier": "com.yourcompany.smartcity",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Show current location on map."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#0A84FF"
       },
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ],
       "package": "com.yourcompany.smartcity"
     },
     "web": {
@@ -32,11 +39,24 @@
     "plugins": [
       "expo-router",
       [
+        "@rnmapbox/maps",
+        {
+          "RNMapboxMapsDownloadToken": "@env:EXPO_PUBLIC_MAPBOX_API_KEY",
+          "RNMapboxMapsVersion": "11.0.0"
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-icon.png",
           "imageResizeMode": "contain",
           "backgroundColor": "#0A84FF"
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Show current location on map."
         }
       ]
     ],
