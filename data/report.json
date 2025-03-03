@@ -1,0 +1,183 @@
+[
+    {
+      "id": "1",
+      "title": "Road Accident",
+      "description": "Car collision reported near City Mall.",
+      "time": "2 hours ago",
+      "icon": "directions-car",
+      "image": "https://pbs.twimg.com/media/EEbkSQ_U4AE_IG6?format=jpg&name=large",
+      "user": {
+        "name": "John Smith",
+        "avatar": "https://randomuser.me/api/portraits/men/1.jpg",
+        "verified": true
+      },
+      "likes": 24,
+      "comments": 8,
+      "solved": false,
+      "solution": null,
+      "currentStatus": null
+    },
+    {
+      "id": "2",
+      "title": "Fire Alert",
+      "description": "Fire outbreak in Industrial Zone.",
+      "time": "3 hours ago",
+      "icon": "local-fire-department",
+      "image": "https://media.istockphoto.com/id/656497862/photo/accident-at-a-steel-mill.jpg?s=612x612&w=0&k=20&c=iAyIw2Sb6MmypFz8Ennv21kyDHX-7cH5ZaYWfqQEZIc=",
+      "user": {
+        "name": "Emma Johnson",
+        "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+        "verified": true
+      },
+      "likes": 42,
+      "comments": 15,
+      "solved": false,
+      "solution": null,
+      "currentStatus": null
+    },
+    {
+      "id": "3",
+      "title": "Water Leakage",
+      "description": "Water pipeline leakage at Park Street.",
+      "time": "6 hours ago",
+      "icon": "water-drop",
+      "image": "https://www.hindustantimes.com/ht-img/img/2024/04/22/550x309/Thane--India---May-09--2023--Water-being-wasted-du_1713799075430_1713799166104.jpg",
+      "user": {
+        "name": "Michael Brown",
+        "avatar": "https://randomuser.me/api/portraits/men/3.jpg",
+        "verified": false
+      },
+      "likes": 18,
+      "comments": 5,
+      "solved": true,
+      "solution": "The municipal plumber team arrived and fixed the broken pipe.",
+      "currentStatus": "Water supply restored."
+    },
+    {
+      "id": "4",
+      "title": "Electric Failure",
+      "description": "Power cut reported near Green Valley.",
+      "time": "7 hours ago",
+      "icon": "bolt",
+      "image": "https://static.toiimg.com/thumb/msid-109681929,width-1280,height-720,resizemode-72/109681929.jpg",
+      "user": {
+        "name": "Sophia Williams",
+        "avatar": "https://randomuser.me/api/portraits/women/4.jpg",
+        "verified": false
+      },
+      "likes": 31,
+      "comments": 12,
+      "solved": false,
+      "solution": null,
+      "currentStatus": null
+    },
+    {
+      "id": "5",
+      "title": "Flood Alert",
+      "description": "Heavy rain causing waterlogging near Central Market.",
+      "time": "1 hour ago",
+      "icon": "water-damage",
+      "image": "https://static.toiimg.com/thumb/msid-103621687,width-1280,height-720,imgsize-142734,resizemode-72,overlay-toi_sw,pt-32,y_pad-40/photo.jpg",
+      "user": {
+        "name": "Liam Martinez",
+        "avatar": "https://randomuser.me/api/portraits/men/15.jpg",
+        "verified": true
+      },
+      "likes": 56,
+      "comments": 22,
+      "solved": false,
+      "solution": null,
+      "currentStatus": "Rescue teams on alert."
+    },
+    {
+      "id": "6",
+      "title": "Gas Leakage",
+      "description": "Gas leakage reported at Sunrise Apartments.",
+      "time": "4 hours ago",
+      "icon": "local-gas-station",
+      "image": "https://images.news18.com/ibnlive/uploads/2023/08/karachi-gas-leak-shutterstock_1837195738.jpg",
+      "user": {
+        "name": "Olivia Davis",
+        "avatar": "https://randomuser.me/api/portraits/women/6.jpg",
+        "verified": true
+      },
+      "likes": 37,
+      "comments": 11,
+      "solved": true,
+      "solution": "Leak fixed by emergency gas team.",
+      "currentStatus": "Residents allowed to return."
+    },
+    {
+      "id": "7",
+      "title": "Traffic Jam",
+      "description": "Heavy traffic congestion near Airport Road.",
+      "time": "30 mins ago",
+      "icon": "traffic",
+      "image": "https://assets.telegraphindia.com/telegraph/2022/Oct/1664747553_03metsks-vipjam1_5c.gif",
+      "user": {
+        "name": "William Taylor",
+        "avatar": "https://randomuser.me/api/portraits/men/7.jpg",
+        "verified": false
+      },
+      "likes": 21,
+      "comments": 6,
+      "solved": false,
+      "solution": null,
+      "currentStatus": "Traffic police deployed."
+    },
+    {
+      "id": "8",
+      "title": "Lost Pet",
+      "description": "Golden Retriever missing near Oakwood Colony.",
+      "time": "5 hours ago",
+      "icon": "pets",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSc5LBUHx7OK1jpTZw4ENGEB9t8N1_TPotOfw&s",
+      "user": {
+        "name": "Emily Clark",
+        "avatar": "https://randomuser.me/api/portraits/women/8.jpg",
+        "verified": false
+      },
+      "likes": 15,
+      "comments": 4,
+      "solved": false,
+      "solution": null,
+      "currentStatus": "Search ongoing, reward offered."
+    },
+    {
+      "id": "9",
+      "title": "Tree Collapse",
+      "description": "Old tree fell near Lakeview Park due to strong winds.",
+      "time": "9 hours ago",
+      "icon": "nature-people",
+      "image": "https://lawbrother.co.in/wp-content/uploads/2024/05/Untitled-design-9.png",
+      "user": {
+        "name": "James Wilson",
+        "avatar": "https://randomuser.me/api/portraits/men/9.jpg",
+        "verified": true
+      },
+      "likes": 29,
+      "comments": 10,
+      "solved": true,
+      "solution": "Tree removed by municipality workers.",
+      "currentStatus": "Park reopened."
+    },
+    {
+      "id": "10",
+      "title": "Street Light Failure",
+      "description": "Street lights not working near Main Square.",
+      "time": "12 hours ago",
+      "icon": "highlight",
+      "image": "https://static.toiimg.com/thumb/msid-99163147,imgsize-761043,width-400,height-225,resizemode-72/99163147.jpg",
+      "user": {
+        "name": "Isabella Scott",
+        "avatar": "https://randomuser.me/api/portraits/women/10.jpg",
+        "verified": true
+      },
+      "likes": 19,
+      "comments": 7,
+      "solved": false,
+      "solution": null,
+      "currentStatus": "Repair pending."
+    }
+  ]
+  

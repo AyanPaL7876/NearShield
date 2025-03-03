@@ -1,12 +1,13 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import React from 'react'
+import ReportScreen from '../../components/ReportScreen'
 
-const report = () => {
+const Report = () => {
   return (
-    <View>
-      <Text>report</Text>
+    <View style={{ flex: 1 }}>
+      <ReportScreen />
     </View>
   )
 }
 
-export default report
+export default Report
