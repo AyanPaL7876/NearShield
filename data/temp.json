@@ -1,0 +1,14 @@
+{
+    "isAuthority": true,
+    "analyticsData": {
+      "incidentsToday": 12,
+      "responseTime": "5 mins",
+      "highAlertAreas": 3,
+      "dashboard": {
+        "title": "Analytics Dashboard",
+        "description": "View heatmaps, statistics, and predictive analytics",
+        "navigationRoute": "AnalyticsDashboard"
+      }
+    }
+  }
+  

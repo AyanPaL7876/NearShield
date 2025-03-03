@@ -25,4 +25,12 @@ export const Colors = {
   },
   background: '#1084fc',
   smallTextColor: '#e3e3e3',
+  good: '#22C55E',
+  warning: '#FFA800',
+  danger: '#FF3D71',
+  primary: '#1084fc',
+  secondary: '#FFA800',
+  tertiary: '#FF3D71',
+  black: '#000000',
+  white: '#ffffff',
 };
