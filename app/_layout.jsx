@@ -42,20 +42,20 @@ export default function RootLayout() {
     );
   }
 
-  if (isSplashVisible) {
-    return (
-        <SplashScreen onAnimationEnd={() => setIsSplashVisible(false)} />
-  );
-  }
-
   return (
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-      <SignedIn>
-        <Slot />
-      </SignedIn>
-      <SignedOut>
-        <LoginScreen />
-      </SignedOut>
+      {isSplashVisible ? (
+        <SplashScreen onAnimationEnd={() => setIsSplashVisible(false)} />
+      ) : (
+        <>
+          <SignedIn>
+            <Slot /> {/* Ensure Slot is rendered */}
+          </SignedIn>
+          <SignedOut>
+            <LoginScreen />
+          </SignedOut>
+        </>
+      )}
     </ClerkProvider>
   );
 }

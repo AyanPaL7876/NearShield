@@ -35,17 +35,17 @@ const Header = () => {
               <Ionicons
                 name="person-circle"
                 size={100}
-                color={Colors.PRIMARY}
+                color={Colors.primary}
               />
             )}
           </TouchableOpacity>
-          <View style={styles.infoContainer}>
+          <View style={styles.userInfo}>
             <Text style={styles.greeting}>{greeting()}</Text>
             <Text style={styles.userName}>{user?.firstName || "User"}</Text>
           </View>
         </View>
         <TouchableOpacity style={styles.notificationButton}>
-          <Ionicons name="notifications" size={24} color={Colors.PRIMARY} />
+          <Ionicons name="notifications" size={24} color={Colors.black} />
         </TouchableOpacity>
     </View>
   )
@@ -56,16 +56,17 @@ export default Header
 const styles = StyleSheet.create({
   userContainer: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     gap: 15,
   },
   avatarContainer: {
-    marginTop: 15,
   },
   avatar: {
     width: 50,
     height: 50,
     borderRadius: 50,
+  },
+  userInfo :{
   },
   container: {
     flex: 1,
@@ -73,7 +74,8 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 20,
-    paddingTop: 16,
+    paddingBottom:35,
+    paddingTop: 20,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -88,6 +90,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: "outfit-bold",
     color: Colors.dark.text,
+    lineHeight: 24
   },
   notificationButton: {
     padding: 12,

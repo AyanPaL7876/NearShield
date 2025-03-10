@@ -7,13 +7,14 @@ const EmergencyCard = ({ icon, title, color, onPress }) => (
   <TouchableOpacity
     style={[styles.emergencyCard, { backgroundColor: color }]}
     onPress={onPress}
+    activeOpacity={0.8}
   >
     <View style={styles.emergencyIconContainer}>{icon}</View>
     <Text style={styles.emergencyTitle}>{title}</Text>
   </TouchableOpacity>
 );
 
-const EmergencyServices = () => {
+const EmergencyServices = ({ navigation }) => {
   return (
     <View style={[section, styles.boxTopRadius]}>
       <Text style={sectionTitle}>Emergency Services</Text>
@@ -21,30 +22,38 @@ const EmergencyServices = () => {
         <EmergencyCard
           icon={<MaterialIcons name="local-police" size={32} color="white" />}
           title="Police"
-          description="Report crime or emergency"
-          color="#FF6B6B"
+          color="#1E3A8A"
           onPress={() => navigation.navigate("Police")}
         />
         <EmergencyCard
           icon={<FontAwesome5 name="ambulance" size={32} color="white" />}
           title="Ambulance"
-          description="Medical emergency"
-          color="#4ECDC4"
+          color="#E11D48"
           onPress={() => navigation.navigate("Ambulance")}
         />
         <EmergencyCard
           icon={<MaterialIcons name="fire-truck" size={32} color="white" />}
           title="Fire"
-          description="Fire emergency"
-          color="#FFB347"
+          color="#F97316"
           onPress={() => navigation.navigate("Fire")}
         />
         <EmergencyCard
           icon={<MaterialIcons name="report" size={32} color="white" />}
           title="Report"
-          description="Report an incident"
-          color="#845EC2"
+          color="#6B21A8"
           onPress={() => navigation.navigate("Report")}
+        />
+        <EmergencyCard
+          icon={<FontAwesome5 name="stethoscope" size={32} color="white" />}
+          title="Doctor"
+          color="#059669"
+          onPress={() => navigation.navigate("Doctor")}
+        />
+        <EmergencyCard
+          icon={<FontAwesome5 name="hospital" size={32} color="white" />}
+          title="Hospital"
+          color="#DC2626FA"
+          onPress={() => navigation.navigate("Hospital")}
         />
       </View>
     </View>
@@ -62,22 +71,27 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
+    gap: 10,
+    paddingVertical: 10,
   },
   emergencyCard: {
-    width: "24%",
-    padding: 8,
-    borderRadius: 15,
-    marginBottom: 8,
-    elevation: 5,
+    width: "30%", // Adjusted for better layout
+    paddingVertical: 15,
+    borderRadius: 12,
     alignItems: "center",
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
   },
   emergencyIconContainer: {
-    marginBottom: 4,
+    marginBottom: 6,
   },
   emergencyTitle: {
-    fontSize: 11,
+    fontSize: 12,
     fontFamily: "outfit-medium",
     color: "white",
-    marginBottom: 3,
-  }
+    textAlign: "center",
+  },
 });
