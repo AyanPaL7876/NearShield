@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
       textAlign: "center",
     },
     analyticsDashboardButton: {
-      backgroundColor: Colors.PRIMARY,
+      backgroundColor: Colors.primary,
       borderRadius: 12,
       overflow: "hidden",
       marginBottom: 15,

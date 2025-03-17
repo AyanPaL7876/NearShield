@@ -4,6 +4,7 @@ import { Slot } from "expo-router";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import LoginScreen from "../components/LoginScreen";
 import SplashScreen from "../components/SplashScreen";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as SecureStore from "expo-secure-store";
 
 const tokenCache = {
@@ -43,6 +44,7 @@ export default function RootLayout() {
   }
 
   return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
     <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
       {isSplashVisible ? (
         <SplashScreen onAnimationEnd={() => setIsSplashVisible(false)} />
@@ -57,5 +59,6 @@ export default function RootLayout() {
         </>
       )}
     </ClerkProvider>
+    </GestureHandlerRootView>
   );
 }

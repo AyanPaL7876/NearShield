@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.primary,
   },
   header: {
     padding: 20,
@@ -79,18 +79,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.primary,
   },
   greeting: {
     fontSize: 15,
     fontFamily: "outfit",
-    color: Colors.smallTextColor,
+    color: "#fff",
   },
   userName: {
     fontSize: 25,
     fontFamily: "outfit-bold",
-    color: Colors.dark.text,
-    lineHeight: 24
+    color: "#fff",
+    lineHeight: 29,
   },
   notificationButton: {
     padding: 12,

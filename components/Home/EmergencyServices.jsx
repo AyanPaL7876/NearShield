@@ -1,20 +1,22 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
 import { section, sectionTitle } from "../../constants/section";
+import { Link } from "expo-router";
 import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
+import { Colors } from "../../constants/Colors";
 
-const EmergencyCard = ({ icon, title, color, onPress }) => (
-  <TouchableOpacity
-    style={[styles.emergencyCard, { backgroundColor: color }]}
-    onPress={onPress}
-    activeOpacity={0.8}
-  >
-    <View style={styles.emergencyIconContainer}>{icon}</View>
-    <Text style={styles.emergencyTitle}>{title}</Text>
-  </TouchableOpacity>
+const EmergencyCard = ({ icon, title, color, href }) => (
+  <Link href={href} style={styles.link} asChild>
+    <Pressable>
+      <View style={[styles.emergencyCard, { backgroundColor: color }]}>
+        <View style={styles.emergencyIconContainer}>{icon}</View>
+        <Text style={styles.emergencyTitle}>{title}</Text>
+      </View>
+    </Pressable>
+  </Link>
 );
 
-const EmergencyServices = ({ navigation }) => {
+const EmergencyServices = () => {
   return (
     <View style={[section, styles.boxTopRadius]}>
       <Text style={sectionTitle}>Emergency Services</Text>
@@ -23,37 +25,37 @@ const EmergencyServices = ({ navigation }) => {
           icon={<MaterialIcons name="local-police" size={32} color="white" />}
           title="Police"
           color="#1E3A8A"
-          onPress={() => navigation.navigate("Police")}
+          href="/screen/police"
         />
         <EmergencyCard
           icon={<FontAwesome5 name="ambulance" size={32} color="white" />}
           title="Ambulance"
           color="#E11D48"
-          onPress={() => navigation.navigate("Ambulance")}
+          href="/screen/ambulance"
         />
         <EmergencyCard
-          icon={<MaterialIcons name="fire-truck" size={32} color="white" />}
+          icon={<MaterialIcons name="local-fire-department" size={32} color="white" />}
           title="Fire"
           color="#F97316"
-          onPress={() => navigation.navigate("Fire")}
+          href="/screen/fire"
         />
         <EmergencyCard
           icon={<MaterialIcons name="report" size={32} color="white" />}
           title="Report"
           color="#6B21A8"
-          onPress={() => navigation.navigate("Report")}
+          href="/screen/report"
         />
         <EmergencyCard
           icon={<FontAwesome5 name="stethoscope" size={32} color="white" />}
           title="Doctor"
           color="#059669"
-          onPress={() => navigation.navigate("Doctor")}
+          href="/screen/doctor"
         />
         <EmergencyCard
           icon={<FontAwesome5 name="hospital" size={32} color="white" />}
           title="Hospital"
-          color="#DC2626FA"
-          onPress={() => navigation.navigate("Hospital")}
+          color="#DC2626"
+          href="/screen/hospital"
         />
       </View>
     </View>
@@ -71,25 +73,36 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    gap: 10,
+    paddingHorizontal: 10,
     paddingVertical: 10,
   },
+  link: {
+    width: "30%",
+    marginBottom: 16,
+  },
   emergencyCard: {
-    width: "30%", // Adjusted for better layout
-    paddingVertical: 15,
+    width: "100%",
+    paddingVertical: 18,
     borderRadius: 12,
     alignItems: "center",
-    elevation: 5,
+    justifyContent: "center",
+    
+    // iOS Shadow
     shadowColor: "#000",
     shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 3 },
     shadowRadius: 5,
+
+    // Android Shadow
+    elevation: 5,
   },
   emergencyIconContainer: {
-    marginBottom: 6,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 0,
   },
   emergencyTitle: {
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: "outfit-medium",
     color: "white",
     textAlign: "center",

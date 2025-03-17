@@ -1,7 +1,3 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
 
 const tintColorLight = '#0a7ea4';
 const tintColorDark = '#fff';
@@ -23,14 +19,41 @@ export const Colors = {
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
   },
-  background: '#1084fc',
-  smallTextColor: '#e3e3e3',
-  good: '#22C55E',
-  warning: '#FFA800',
-  danger: '#FF3D71',
-  primary: '#1084fc',
-  secondary: '#FFA800',
-  tertiary: '#FF3D71',
-  black: '#000000',
-  white: '#ffffff',
+  // Primary palette
+  primary: '#0052CC',          // Deeper, more professional blue
+  primaryDark: '#003D99',      // Dark blue for contrast elements
+  primaryLight: '#E6F0FF',     // Light blue for backgrounds/accents
+  
+  // Secondary palette
+  secondary: '#00875A',        // Professional green for success states
+  secondaryLight: '#E3F5EE',   // Light green for backgrounds
+  
+  // Neutral colors
+  white: '#FFFFFF',
+  background: '#F0F4F8',       // Slightly cooler background
+  cardBg: '#FFFFFF',
+  
+  // Text colors
+  textPrimary: '#172B4D',      // Deeper, more readable primary text
+  textSecondary: '#505F79',    // Professional secondary text
+  textLight: '#7A869A',        // Light text for captions
+  
+  // Status colors
+  success: '#06AD61',
+  warning: '#F79009',
+  error: '#DE350B',
+  
+  // UI elements
+  border: '#DFE1E6',           // Subtle border color
+  divider: '#EBECF0',          // Light divider
+  disabled: '#B3BAC5',
+  icon: '#505F79',
+  
+  // Semantic - Police theme
+  policeBlue: '#0A2463',       // Deep authoritative blue
+  policeLightBlue: '#0066CC',  // Police blue for interactive elements
+  policeAccent: '#F2F4F7',     // Light background for accent areas
+  
+  // Status bar
+  statusBarBg: '#051A4C',
 };

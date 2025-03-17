@@ -4,13 +4,11 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Image,
   Modal,
 } from "react-native";
 import React, { useState } from "react";
 import { Colors } from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Header from "./Home/header";
 import EmergencyServices from "./Home/EmergencyServices";
@@ -20,7 +18,6 @@ import Weather from "./Home/Weather";
 
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
   const [weatherModalVisible, setWeatherModalVisible] = useState(false);
 
   // Check if user is an authority
@@ -90,7 +87,7 @@ const styles = StyleSheet.create({
   },
   container:{
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.primary,
     padding: 0,
   },
   // Floating Weather Button

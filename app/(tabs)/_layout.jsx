@@ -1,5 +1,6 @@
 import { Tabs } from "expo-router";
 import React from "react";
+import { View, StyleSheet } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -7,10 +8,17 @@ import Octicons from '@expo/vector-icons/Octicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import { Colors } from '../../constants/Colors';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { StatusBar } from "expo-status-bar";
 
 export default function TabLayout() {
   return (
-    <Tabs initialRouteName="home" screenOptions={{
+    <GestureHandlerRootView style={styles.container}>
+      <StatusBar
+      backgroundColor={Colors.primary}
+      barStyle="light-content" />
+      
+      <Tabs initialRouteName="home" screenOptions={{
       headerShown: false, //remove all heaader
       tabBarActiveTintColor: Colors.primary, // set the tab bar active color
       tabBarShowLabel: false, // Hide tab labels
@@ -45,5 +53,14 @@ export default function TabLayout() {
         tabBarIcon : ({color})=><MaterialIcons name="settings-suggest" size={30} color={color} />
         }} />
     </Tabs>
+    </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 25, 
+    backgroundColor: Colors.primary,
+  },
+});
