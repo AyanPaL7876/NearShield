@@ -22,7 +22,9 @@
       },
       "permissions": [
         "ACCESS_COARSE_LOCATION",
-        "ACCESS_FINE_LOCATION"
+        "ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
       ],
       "package": "com.yourcompany.smartcity"
     },
@@ -62,6 +64,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "16fdd3f4-d7aa-44fd-9895-ce33a2255ccf"
+      }
+    },
+    "owner": "ayanpal7876"
   }
 }
