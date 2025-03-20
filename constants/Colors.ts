@@ -53,6 +53,11 @@ export const Colors = {
   policeBlue: '#0A2463',       // Deep authoritative blue
   policeLightBlue: '#0066CC',  // Police blue for interactive elements
   policeAccent: '#F2F4F7',     // Light background for accent areas
+
+  // Semantic - Hospital theme
+  hospitalGreen: '#00875A',    // Professional green for success states
+  hospitalLightGreen: '#E3F5EE', // Light green for backgrounds 
+  hospitalAccent: '#F2F7F5',   // Light background for accent areas
   
   // Status bar
   statusBarBg: '#051A4C',
