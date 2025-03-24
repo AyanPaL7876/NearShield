@@ -70,7 +70,10 @@ export const Colors = {
   ambulanceAccent: '#FFFAF0',  // Light background for accent areas
 
   // Semantic - doctor theme
-  
+  doctorPurple: '#614BB9',     // Doctor purple for primary elements
+  doctorLightPurple: '#F2F0FF', // Light purple for backgrounds
+  doctorAccent: '#FDFDFF',     // Light background for accent areas
+
   
   // Status bar
   statusBarBg: '#051A4C',
