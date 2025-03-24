@@ -42,20 +42,20 @@ const EmergencyServices = () => {
         <EmergencyCard
           icon={<FontAwesome5 name="ambulance" size={32} color="white" />}
           title="Ambulance"
-          color="#E11D48"
+          color="#FFAB00"
           href="/screen/ambulance"
-        />
-        <EmergencyCard
-          icon={<MaterialIcons name="report" size={32} color="white" />}
-          title="Report"
-          color="#6B21A8"
-          href="/screen/report"
         />
         <EmergencyCard
           icon={<FontAwesome5 name="stethoscope" size={32} color="white" />}
           title="Doctor"
-          color="#059669"
+          color="#614BB9"
           href="/screen/doctor"
+        />
+        <EmergencyCard
+          icon={<MaterialIcons name="report" size={32} color="white" />}
+          title="Report"
+          color={Colors.primary}
+          href="/screen/report"
         />
       </View>
     </View>

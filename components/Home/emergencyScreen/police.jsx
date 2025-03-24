@@ -157,24 +157,23 @@ const PoliceScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar 
-        backgroundColor={Colors.statusBarBg}
-        barStyle="light-content"
-      />
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor={Colors.policeBlue} />
       <View style={styles.header}>
-        <View style={{ flexDirection: 'row', alignItems: "center" }}>
+        <View style={styles.headerTopRow}>
           <TouchableOpacity 
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
-            <AntDesign name="arrowleft" size={20} color="#4A80F0" />
+            <AntDesign name="arrowleft" size={20} color="#FFFFFF" />
           </TouchableOpacity>
-          <View style={{ flexDirection: 'row', alignItems: "flex-end" }}>
-            <Text style={styles.headerTitle}>Nearby Police Stations</Text>
-          </View>
+          <Text style={styles.headerTitle}>Nearby Police Stations</Text>
         </View>
+        <Text style={styles.headerSubtitle}>
+          {useFallbackData ? 'Showing sample data - Pull down to refresh' : `Found ${policeStations.length} police stations near you`}
+        </Text>
       </View>
+      
       {renderContent()}
     </SafeAreaView>
   );
@@ -247,6 +246,36 @@ const styles = StyleSheet.create({
     ...Typography.caption,
     color: Colors.white,
     marginLeft: 8,
+  },
+  container: {
+    backgroundColor: Colors.background,
+  },
+  header: {
+    backgroundColor: Colors.policeBlue,
+    padding: 16,
+    paddingTop: 10,
+    paddingBottom: 20,
+  },
+  headerTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  backButton: {
+    padding: 8,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    marginRight: 10,
+  },
+  headerTitle: {
+    ...Typography.heading1,
+    color: Colors.white,
+  },
+  headerSubtitle: {
+    ...Typography.caption,
+    color: Colors.white,
+    opacity: 0.8,
+    marginTop: 4,
   },
 });
 

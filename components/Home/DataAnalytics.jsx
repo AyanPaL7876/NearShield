@@ -1,157 +1,120 @@
-import {
-    View,
-    Text,
-    StyleSheet,
-    TouchableOpacity,
-  } from "react-native";
-  import React from "react";
-  import { Colors } from "../../constants/Colors";
-  import { section, sectionTitle } from "../../constants/section";
-  import { MaterialIcons } from "@expo/vector-icons";
-  import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React from "react";
+import { 
+    View, 
+    Text, 
+    StyleSheet, 
+    Dimensions 
+} from "react-native";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 
+import { Colors } from "../../constants/Colors";
+import { sectionTitle } from "../../constants/section";
+
+const { width } = Dimensions.get('window');
 
 const DataAnalytics = () => {
-
     const analyticsData = {
-        incidentsToday: 24,
-        emergencyResponses: 18,
-        highAlertAreas: 3,
-        responseTime: "8.5 min",
-      };
+        totalIncidents: 24,
+        solvedIncidents: 18
+    };
 
-  return (
-    <View style={section}>
-        <Text style={sectionTitle}>Data Analytics</Text>
-
-        {/* Analytics Summary Cards */}
-        <View style={styles.analyticsGrid}>
-          <View style={styles.analyticsCard}>
-            <MaterialIcons
-              name="crisis-alert"
-              size={24}
-              color={Colors.warning}
-            />
-            <Text style={styles.analyticsValue}>
-              {analyticsData.incidentsToday}
-            </Text>
-            <Text style={styles.analyticsLabel}>Incidents Today</Text>
-          </View>
-
-          <View style={styles.analyticsCard}>
-            <MaterialIcons
-              name="access-time"
-              size={24}
-              color={Colors.good}
-            />
-            <Text style={[styles.analyticsValue , {fontSize: 15}]}>
-              {analyticsData.responseTime}
-            </Text>
-            <Text style={styles.analyticsLabel}>Avg Response</Text>
-          </View>
-
-          <View style={styles.analyticsCard}>
-            <MaterialCommunityIcons
-              name="map-marker-alert"
-              size={24}
-              color={Colors.danger}
-            />
-            <Text style={styles.analyticsValue}>
-              {analyticsData.highAlertAreas}
-            </Text>
-            <Text style={styles.analyticsLabel}>High Alert Areas</Text>
-          </View>
-        </View>
-
-        {/* Analytics Dashboard Button */}
-        <TouchableOpacity
-          style={[styles.analyticsDashboardButton, styles.card]}
-          onPress={() => navigation.navigate("AnalyticsDashboard")}
-        >
-          <View style={styles.analyticsDashboardContent}>
-            <View style={styles.analyticsTextContainer}>
-              <Text style={styles.analyticsDashboardTitle}>
-                Analytics Dashboard
-              </Text>
-              <Text style={styles.analyticsDashboardDesc}>
-                View heatmaps, statistics, and predictive analytics
-              </Text>
+    const AnalyticsCard = ({ 
+        icon, 
+        iconName, 
+        value, 
+        label, 
+        color 
+    }) => (
+        <View style={styles.analyticsCard}>
+            <View style={styles.iconContainer}>
+                {React.createElement(icon, {
+                    name: iconName,
+                    size: 24,
+                    color: color
+                })}
             </View>
-            <MaterialIcons name="arrow-forward-ios" size={18} color="#000" />
-          </View>
-        </TouchableOpacity>
-      </View>
-  )
-}
+            <Text style={styles.analyticsValue}>{value}</Text>
+            <Text style={styles.analyticsLabel}>{label}</Text>
+        </View>
+    );
 
-export default DataAnalytics;
+    return (
+        <View style={styles.container}>
+            <Text style={sectionTitle}>Incident Analytics</Text>
+            
+            <View style={styles.analyticsGrid}>
+                <AnalyticsCard 
+                    icon={MaterialIcons}
+                    iconName="crisis-alert"
+                    value={analyticsData.totalIncidents}
+                    label="Total Incidents"
+                    color={Colors.warning}
+                />
+                
+                <AnalyticsCard 
+                    icon={MaterialCommunityIcons}
+                    iconName="check-circle"
+                    value={analyticsData.solvedIncidents}
+                    label="Solved Incidents"
+                    color={Colors.success}
+                />
+            </View>
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: Colors.white,
+        // borderRadius: 12,
+        padding: 16,
+        // marginVertical: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        // elevation: 3,
+    },
+    sectionTitle: {
+        fontSize: 18,
+        fontWeight: '700',
+        color: '#2C3E50',
+        marginBottom: 16,
+        paddingHorizontal: 8,
+    },
     analyticsGrid: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      marginBottom: 15,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     analyticsCard: {
-      backgroundColor: "#f8f8f8",
-      padding: 15,
-      borderRadius: 12,
-      alignItems: "center",
-      width: "30%",
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 1 },
-      shadowOpacity: 0.1,
-      shadowRadius: 2,
-      elevation: 2,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 16,
+        width: '48%', // Adjusted to fit two cards side by side
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+        elevation: 2,
     },
-    card: {
-      backgroundColor: "#f8f8f8",
-      paddingHorizontal: 10,
-      borderRadius: 12,
-    //   alignItems: "center",
-    //   width: "30%",
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 1 },
-      shadowOpacity: 0.1,
-      shadowRadius: 2,
-      elevation: 2,
+    iconContainer: {
+        backgroundColor: '#F0F4F8',
+        borderRadius: 20,
+        padding: 8,
+        marginBottom: 10,
     },
     analyticsValue: {
-      fontSize: 20,
-      fontFamily: "outfit-bold",
-      color: "#333",
-      marginVertical: 5,
+        fontSize: 20,
+        fontWeight: '700',
+        color: '#2C3E50',
+        marginBottom: 4,
     },
     analyticsLabel: {
-      fontSize: 12,
-      fontFamily: "outfit",
-      color: "#666",
-      textAlign: "center",
+        fontSize: 12,
+        color: '#7F8C8D',
+        textAlign: 'center',
     },
-    analyticsDashboardButton: {
-      backgroundColor: Colors.primary,
-      borderRadius: 12,
-      overflow: "hidden",
-      marginBottom: 15,
-    },
-    analyticsDashboardContent: {
-      padding: 15,
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-    },
-    analyticsTextContainer: {
-      flex: 1,
-    },
-    analyticsDashboardTitle: {
-      fontSize: 16,
-      fontFamily: "outfit-bold",
-      color: "#000",
-    },
-    analyticsDashboardDesc: {
-      fontSize: 12,
-      fontFamily: "outfit",
-      color: "#000",
-      opacity: 0.8,
-    }
-  });
+});
+
+export default DataAnalytics;

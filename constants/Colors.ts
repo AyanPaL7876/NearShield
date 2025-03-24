@@ -63,7 +63,24 @@ export const Colors = {
   fireRed: '#DE350B',          // Fire engine red for error states
   fireLightRed: '#FBEAE9',     // Light red for backgrounds
   fireAccent: '#FDF2F0',       // Light background for accent areas
+
+  // Semantic - Ambulance theme
+  ambulanceYellow: '#FFAB00',  // Ambulance yellow for warning states
+  ambulanceLightYellow: '#FFF7E5', // Light yellow for backgrounds
+  ambulanceAccent: '#FFFAF0',  // Light background for accent areas
+
+  // Semantic - doctor theme
+  
   
   // Status bar
   statusBarBg: '#051A4C',
+  cardBackground: '#FFFFFF',
+  primaryText: '#333333',
+  secondaryText: '#555555',
+  tertiaryText: '#888888',
+  ambulanceDarkBlue: '#1565C0',
+  successDark: '#2E7D32',
+  accent: '#5E35B1',
+  accentDark: '#4527A0',
+  cardShadow: 'rgba(0, 0, 0, 0.1)'
 };
