@@ -1,3 +1,6 @@
+import { Platform } from 'react-native';
+import { Linking, Alert } from 'react-native';
+
 // Open navigation to a police station
 export const navigateToStation = (station) => {
     const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });

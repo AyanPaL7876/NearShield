@@ -28,16 +28,22 @@ const EmergencyServices = () => {
           href="/screen/police"
         />
         <EmergencyCard
-          icon={<FontAwesome5 name="ambulance" size={32} color="white" />}
-          title="Ambulance"
-          color="#E11D48"
-          href="/screen/ambulance"
+          icon={<FontAwesome5 name="hospital" size={32} color="white" />}
+          title="Hospital"
+          color="#00875A"
+          href="/screen/hospital"
         />
         <EmergencyCard
           icon={<MaterialIcons name="local-fire-department" size={32} color="white" />}
           title="Fire"
-          color="#F97316"
+          color="#DE350B"
           href="/screen/fire"
+        />
+        <EmergencyCard
+          icon={<FontAwesome5 name="ambulance" size={32} color="white" />}
+          title="Ambulance"
+          color="#E11D48"
+          href="/screen/ambulance"
         />
         <EmergencyCard
           icon={<MaterialIcons name="report" size={32} color="white" />}
@@ -50,12 +56,6 @@ const EmergencyServices = () => {
           title="Doctor"
           color="#059669"
           href="/screen/doctor"
-        />
-        <EmergencyCard
-          icon={<FontAwesome5 name="hospital" size={32} color="white" />}
-          title="Hospital"
-          color="#DC2626"
-          href="/screen/hospital"
         />
       </View>
     </View>

@@ -58,6 +58,11 @@ export const Colors = {
   hospitalGreen: '#00875A',    // Professional green for success states
   hospitalLightGreen: '#E3F5EE', // Light green for backgrounds 
   hospitalAccent: '#F2F7F5',   // Light background for accent areas
+
+  // Semantic - Fire theme
+  fireRed: '#DE350B',          // Fire engine red for error states
+  fireLightRed: '#FBEAE9',     // Light red for backgrounds
+  fireAccent: '#FDF2F0',       // Light background for accent areas
   
   // Status bar
   statusBarBg: '#051A4C',
