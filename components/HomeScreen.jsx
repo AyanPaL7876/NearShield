@@ -9,13 +9,11 @@ import {
 import React, { useState } from "react";
 import { Colors } from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Header from "./Home/header";
 import EmergencyServices from "./Home/EmergencyServices";
 import DataAnalytics from "./Home/DataAnalytics";
 import RecentAlerts from "./Home/RecentAlerts";
 import Weather from "./Home/Weather";
-
 
 const HomeScreen = () => {
   const [weatherModalVisible, setWeatherModalVisible] = useState(false);
@@ -37,8 +35,8 @@ const HomeScreen = () => {
         {/* Header Section */}
         <Header />
 
-        {/* Emergency Services Section */}
-        <EmergencyServices />
+        {/* Emergency Services Section with Weather Modal Functionality */}
+        <EmergencyServices openWeatherModal={openWeatherModal} />
 
         {/* Data Analytics Section - Only shown to authorities */}
         {/* {isAuthority && ( */}
@@ -48,14 +46,6 @@ const HomeScreen = () => {
         {/* Recent Alerts Section */}
         <RecentAlerts />
       </ScrollView>
-
-      {/* Fixed Weather Button */}
-      <TouchableOpacity 
-        style={styles.floatingWeatherButton}
-        onPress={openWeatherModal}
-      >
-        <MaterialCommunityIcons name="weather-partly-cloudy" size={26} color="white" />
-      </TouchableOpacity>
 
       {/* Weather Modal Popup */}
       <Modal
@@ -89,24 +79,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.primary,
     padding: 0,
-  },
-  // Floating Weather Button
-  floatingWeatherButton: {
-    position: 'absolute',
-    bottom: 25,
-    right: 25,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: Colors.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    zIndex: 999,
   },
   // Modal Styles
   modalContainer: {

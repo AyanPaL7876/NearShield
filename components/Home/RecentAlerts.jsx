@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   cards:{
     flexDirection: "column",
     gap: 15,
-    marginBottom:25
+    marginBottom:75
   },
   alertCard: {
     backgroundColor: "#FFF5E6",

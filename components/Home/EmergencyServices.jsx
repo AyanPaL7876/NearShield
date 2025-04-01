@@ -1,22 +1,38 @@
+// EmergencyServices.js
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
 import { section, sectionTitle } from "../../constants/section";
 import { Link } from "expo-router";
-import { MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
+import { MaterialIcons, FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Colors } from "../../constants/Colors";
 
-const EmergencyCard = ({ icon, title, color, href }) => (
-  <Link href={href} style={styles.link} asChild>
-    <Pressable>
-      <View style={[styles.emergencyCard, { backgroundColor: color }]}>
-        <View style={styles.emergencyIconContainer}>{icon}</View>
-        <Text style={styles.emergencyTitle}>{title}</Text>
-      </View>
-    </Pressable>
-  </Link>
-);
+const EmergencyCard = ({ icon, title, color, href, onPress }) => {
+  // Use Pressable with onPress if provided, otherwise use Link
+  const CardContent = (
+    <View style={[styles.emergencyCard, { backgroundColor: color }]}>
+      <View style={styles.emergencyIconContainer}>{icon}</View>
+      <Text style={styles.emergencyTitle}>{title}</Text>
+    </View>
+  );
 
-const EmergencyServices = () => {
+  if (onPress) {
+    return (
+      <Pressable style={styles.link} onPress={onPress}>
+        {CardContent}
+      </Pressable>
+    );
+  }
+
+  return (
+    <Link href={href} style={styles.link} asChild>
+      <Pressable>
+        {CardContent}
+      </Pressable>
+    </Link>
+  );
+};
+
+const EmergencyServices = ({ openWeatherModal }) => {
   return (
     <View style={[section, styles.boxTopRadius]}>
       <Text style={sectionTitle}>Emergency Services</Text>
@@ -52,10 +68,10 @@ const EmergencyServices = () => {
           href="/screen/doctor"
         />
         <EmergencyCard
-          icon={<MaterialIcons name="report" size={32} color="white" />}
-          title="Report"
-          color={Colors.primary}
-          href="/screen/report"
+          icon={<MaterialCommunityIcons name="weather-partly-cloudy" size={32} color="white" />}
+          title="Weather"
+          color="#0096FF"
+          onPress={openWeatherModal}
         />
       </View>
     </View>
