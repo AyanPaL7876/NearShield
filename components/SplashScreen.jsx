@@ -96,7 +96,7 @@ export default function SplashScreen({ onAnimationEnd }) {
             color="#4285F4"
           />
         </View>
-        <ThemedText style={styles.title}>Smart City</ThemedText>
+        <ThemedText style={styles.title}>NearShield</ThemedText>
         <ThemedText style={styles.subtitle}>Safety & Security</ThemedText>
       </Animated.View>
     </View>

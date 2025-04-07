@@ -33,9 +33,9 @@ const LoginScreen = () => {
   return (
     <View style={styles.container}>
       <Animated.View entering={FadeInDown.duration(1000)} style={styles.content}>
-        <Image source={require("../assets/images/loging-top-img.png")} style={styles.image} resizeMode="contain" />
+        <Image source={require("../assets/images/loging-top-img.jpg")} style={styles.image} resizeMode="contain" />
 
-        <Text style={styles.title}>Smart City Directory</Text>
+        <Text style={styles.title}>NearShield</Text>
         <Text style={styles.subtitle}>Safety & Emergency Response System</Text>
 
         <TouchableOpacity style={styles.button} onPress={onPress}>

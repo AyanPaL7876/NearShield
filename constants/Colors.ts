@@ -85,5 +85,10 @@ export const Colors = {
   successDark: '#2E7D32',
   accent: '#5E35B1',
   accentDark: '#4527A0',
-  cardShadow: 'rgba(0, 0, 0, 0.1)'
+  cardShadow: 'rgba(0, 0, 0, 0.1)',
+  
+  text: '#333333',
+  textVeryLight: '#E0E0E0',
+  inputBackground: '#f9f9f9',
+  buttonText: '#ffffff',
 };

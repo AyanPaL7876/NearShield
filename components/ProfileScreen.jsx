@@ -27,7 +27,7 @@ const ProfileScreen = () => {
           {user?.imageUrl ? (
             <Image source={{ uri: user.imageUrl }} style={styles.avatar} />
           ) : (
-            <Ionicons name="person-circle" size={100} color={Colors.PRIMARY} />
+            <Ionicons name="person-circle" size={100} color={Colors.primary} />
           )}
         </View>
         <Text variant="headlineMedium" style={styles.name}>{user?.fullName || 'No Name'}</Text>
