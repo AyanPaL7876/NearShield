@@ -6,8 +6,6 @@ import {
   ActivityIndicator,
   SafeAreaView,
 } from "react-native";
-import { Link } from "expo-router";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Colors } from "../constants/Colors";
 import { fetchReports } from "../services/reportService";
 import ReportCard from "./Report/ReportCard";
@@ -50,17 +48,24 @@ const ReportScreen = () => {
   };
 
   const getFilteredReports = () => {
-    if (filter === "all") return reports;
-    if (filter === "verified") {
-      return reports.filter((report) => report.user?.verified);
-    }
+    let filteredReports = reports;
+    
+    // Apply filters
     if (filter === "solved") {
-      return reports.filter((report) => report.solved);
+      filteredReports = filteredReports.filter((report) => report.solved);
+    } else if (filter === "unsolved") {
+      filteredReports = filteredReports.filter((report) => !report.solved);
     }
-    if (filter === "unsolved") {
-      return reports.filter((report) => !report.solved);
-    }
-    return reports;
+    
+    // Sort by timestamp, newest first
+    return filteredReports.sort((a, b) => {
+      // Assuming your reports have a timestamp or createdAt field
+      // If using Firebase Timestamp objects
+      return b.createdAt?.toMillis() - a.createdAt?.toMillis();
+      
+      // If using regular Date objects or timestamp numbers
+      // return b.createdAt - a.createdAt;
+    });
   };
 
   const openSolveModal = (report) => {
@@ -98,10 +103,6 @@ const ReportScreen = () => {
             )}
           />
         )}
-
-        <Link href="/screen/uplodeReport" style={styles.floatingButton}>
-          <MaterialIcons style={styles.floatingIcon} name="add" size={40} color="#FFF" />
-        </Link>
 
         {/* Solution Modal */}
         <SolutionModal

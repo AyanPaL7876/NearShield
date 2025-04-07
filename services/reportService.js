@@ -102,3 +102,37 @@ export const reopenReport = async (reportId, reportTitle) => {
     return false;
   }
 };
+
+
+export const submitReport = async (reportData, uploadedImage) => {
+  try {
+    // If there's an image, upload it to Cloudinary first
+    let imageUrl = null;
+    if (uploadedImage) {
+      imageUrl = await uploadImageToCloudinary(uploadedImage);
+    }
+
+    // Create report object with all required fields
+    const firestoreData = {
+      ...reportData,
+      image: imageUrl,
+      likes: 0,
+      comments: 0,
+      solved: false,
+      solution: null,
+      currentStatus: null,
+      createdAt: serverTimestamp(),
+    };
+
+    // Add document to Firestore and get the reference
+    const docRef = await addDoc(collection(db, 'reports'), firestoreData);
+    
+    return {
+      success: true,
+      reportId: docRef.id
+    };
+  } catch (error) {
+    console.error('Error submitting report:', error);
+    throw error;
+  }
+};

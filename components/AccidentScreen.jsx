@@ -1,49 +1,47 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
+// AccidentReportForm.js
+// Main component file using the separated logic
+
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 import { Card, Avatar, Button, Divider } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import * as ImagePicker from 'expo-image-picker';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Colors } from '../constants/Colors';
 import { useUser } from '@clerk/clerk-expo';
+import { useReportForm } from '../hooks/useReportForm';
 
 const AccidentReportForm = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [location, setLocation] = useState('');
-  const [uploadedImage, setUploadedImage] = useState(null);
-  const [loading, setLoading] = useState(false);
   const { user } = useUser();
+  
+  const {
+    title,
+    setTitle,
+    description,
+    setDescription,
+    location,
+    setLocation,
+    uploadedImage,
+    setUploadedImage,
+    loading,
+    incidentType,
+    setIncidentType,
+    pickImage,
+    fetchCurrentLocation,
+    handleSubmit
+  } = useReportForm(user);
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!result.canceled) {
-      setUploadedImage(result.assets[0].uri);
-    }
-  };
-
-  const handleSubmit = () => {
-    setLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      // Reset form
-      setTitle('');
-      setDescription('');
-      setLocation('');
-      setUploadedImage(null);
-      alert('Report submitted successfully!');
-    }, 1500);
-  };
-
-  const getCurrentLocation = () => {
-    setLocation('Current location detected');
-  };
+  // Component for selecting incident type
+  const IncidentTypeButton = ({ icon, label, active, onPress }) => (
+    <TouchableOpacity 
+      style={[styles.incidentType, active ? styles.activeIncidentType : null]}
+      onPress={onPress}
+    >
+      <Icon name={icon} size={24} color={active ? "#fff" : "#555"} />
+      <Text style={active ? styles.incidentTypeText : styles.incidentTypeTextInactive}>
+        {label}
+      </Text>
+    </TouchableOpacity>
+  );
 
   return (
     <ScrollView style={styles.container}>
@@ -59,24 +57,80 @@ const AccidentReportForm = () => {
         <Card.Content>
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Incident Type</Text>
-            <View style={styles.incidentTypeContainer}>
-              <TouchableOpacity style={[styles.incidentType, styles.activeIncidentType]}>
-                <Icon name="directions-car" size={24} color="#fff" />
-                <Text style={styles.incidentTypeText}>Road</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.incidentType}>
-                <Icon name="local-fire-department" size={24} color="#555" />
-                <Text style={styles.incidentTypeTextInactive}>Fire</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.incidentType}>
-                <Icon name="medical-services" size={24} color="#555" />
-                <Text style={styles.incidentTypeTextInactive}>Medical</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.incidentType}>
-                <Icon name="public" size={24} color="#555" />
-                <Text style={styles.incidentTypeTextInactive}>Other</Text>
-              </TouchableOpacity>
-            </View>
+            <ScrollView 
+              horizontal 
+              showsHorizontalScrollIndicator={false}
+              style={styles.incidentTypesScrollContainer}
+            >
+              <View style={styles.incidentTypeRow}>
+                <IncidentTypeButton 
+                  icon="directions-car" 
+                  label="Road" 
+                  active={incidentType === 'directions-car'} 
+                  onPress={() => setIncidentType('directions-car')}
+                />
+                <IncidentTypeButton 
+                  icon="local-fire-department" 
+                  label="Fire" 
+                  active={incidentType === 'local-fire-department'} 
+                  onPress={() => setIncidentType('local-fire-department')}
+                />
+                <IncidentTypeButton 
+                  icon="medical-services" 
+                  label="Medical" 
+                  active={incidentType === 'medical-services'} 
+                  onPress={() => setIncidentType('medical-services')}
+                />
+                <IncidentTypeButton 
+                  icon="local-gas-station" 
+                  label="Gas Leak" 
+                  active={incidentType === 'local-gas-station'} 
+                  onPress={() => setIncidentType('local-gas-station')}
+                />
+                <IncidentTypeButton 
+                  icon="local-bar" 
+                  label="Drunk" 
+                  active={incidentType === 'local-bar'} 
+                  onPress={() => setIncidentType('local-bar')}
+                />
+                <IncidentTypeButton 
+                  icon="flash-on" 
+                  label="Electric" 
+                  active={incidentType === 'flash-on'} 
+                  onPress={() => setIncidentType('flash-on')}
+                />
+                <IncidentTypeButton 
+                  icon="warning" 
+                  label="Hazard" 
+                  active={incidentType === 'warning'} 
+                  onPress={() => setIncidentType('warning')}
+                />
+                <IncidentTypeButton 
+                  icon="waves" 
+                  label="Flood" 
+                  active={incidentType === 'waves'} 
+                  onPress={() => setIncidentType('waves')}
+                />
+                <IncidentTypeButton 
+                  icon="construction" 
+                  label="Road Work" 
+                  active={incidentType === 'construction'} 
+                  onPress={() => setIncidentType('construction')}
+                />
+                <IncidentTypeButton 
+                  icon="local-police" 
+                  label="Crime" 
+                  active={incidentType === 'local-police'} 
+                  onPress={() => setIncidentType('local-police')}
+                />
+                <IncidentTypeButton 
+                  icon="public" 
+                  label="Other" 
+                  active={incidentType === 'public'} 
+                  onPress={() => setIncidentType('public')}
+                />
+              </View>
+            </ScrollView>
           </View>
 
           <View style={styles.inputGroup}>
@@ -110,7 +164,11 @@ const AccidentReportForm = () => {
                 value={location}
                 onChangeText={setLocation}
               />
-              <TouchableOpacity style={styles.locationButton} onPress={getCurrentLocation}>
+              <TouchableOpacity 
+                style={styles.locationButton} 
+                onPress={fetchCurrentLocation}
+                disabled={loading}
+              >
                 <Icon name="my-location" size={24} color="#fff" />
               </TouchableOpacity>
             </View>
@@ -136,7 +194,7 @@ const AccidentReportForm = () => {
           <Divider style={styles.divider} />
 
           <View style={styles.userInfoSection}>
-            <Avatar.Image size={40} source={{ uri: user.imageUrl }} />
+            <Avatar.Image size={40} source={{ uri: user?.imageUrl }} />
             <View style={styles.userDetails}>
               <Text style={styles.userName}>{user?.fullName || 'No Name'}</Text>
               <Text style={styles.userStatus}>Your identity will be shared with officials</Text>
@@ -149,8 +207,9 @@ const AccidentReportForm = () => {
             onPress={handleSubmit}
             style={styles.submitButton}
             labelStyle={styles.submitButtonText}
+            disabled={loading}
           >
-            Submit Report
+            {loading ? 'Submitting...' : 'Submit Report'}
           </Button>
         </Card.Content>
       </Card>
@@ -160,9 +219,7 @@ const AccidentReportForm = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     backgroundColor: '#f5f5f5',
-    paddingButtom: 40,
   },
   header: {
     padding: 24,
@@ -183,7 +240,7 @@ const styles = StyleSheet.create({
     marginTop: -20,
     marginHorizontal: 16,
     borderRadius: 16,
-    marginBottom: 24,
+    marginBottom: 90,
     elevation: 4,
   },
   inputGroup: {
@@ -207,10 +264,12 @@ const styles = StyleSheet.create({
     height: 100,
     textAlignVertical: 'top',
   },
-  incidentTypeContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  incidentTypesScrollContainer: {
     marginBottom: 8,
+  },
+  incidentTypeRow: {
+    flexDirection: 'row',
+    paddingRight: 16,
   },
   incidentType: {
     alignItems: 'center',
@@ -218,7 +277,8 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     backgroundColor: '#f0f0f0',
-    width: '22%',
+    width: 80,
+    marginRight: 8,
   },
   activeIncidentType: {
     backgroundColor: Colors.primary,
