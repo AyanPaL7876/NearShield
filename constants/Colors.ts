@@ -86,7 +86,8 @@ export const Colors = {
   accent: '#5E35B1',
   accentDark: '#4527A0',
   cardShadow: 'rgba(0, 0, 0, 0.1)',
-  
+  denger: '#D32F2F',
+
   text: '#333333',
   textVeryLight: '#E0E0E0',
   inputBackground: '#f9f9f9',

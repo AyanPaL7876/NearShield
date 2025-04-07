@@ -16,24 +16,22 @@ export const styles = StyleSheet.create({
     borderColor: "#e0e0e0",
   },
   header: {
-    borderBottomWidth: 2,
-    borderBottomColor: "#222",
     paddingBottom: 8,
-    marginBottom: 8,
+    marginBottom: 0,
     paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingTop: 5,
   },
   userInfo: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 12,
-    borderBottomWidth: 1,
+    justifyContent: "flex-end",
+    padding: 5,
+    paddingBottom: 15,
     borderBottomColor: "#ddd",
-    backgroundColor: "#f1efe9",
   },
   avatar: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     borderRadius: 20,
     borderWidth: 1,
     borderColor: "#000",
@@ -48,12 +46,9 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 14,
     marginRight: 4,
-    fontFamily: "serif", // Newspaper-style font
+    fontFamily: "serif",
     textTransform: "uppercase",
     letterSpacing: 0.5,
-  },
-  verifiedIcon: {
-    marginLeft: 4,
   },
   cardTime: {
     color: "#444",
@@ -82,7 +77,7 @@ export const styles = StyleSheet.create({
     top: 12,
     right: 12,
     backgroundColor: "#8B0000", // Dark red for newspaper feel
-    paddingHorizontal: 10,
+    paddingHorizontal: 1,
     paddingVertical: 4,
     borderRadius: 0, // Square corners for newspaper style
     flexDirection: "row",
@@ -209,5 +204,22 @@ export const styles = StyleSheet.create({
     color: "#777",
     fontStyle: "italic",
     fontFamily: "serif",
+  },
+  categoryLabel: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.lightGray,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 15,
+    alignSelf: 'flex-start',
+  },
+  categoryIcon: {
+    marginRight: 5,
+  },
+  categoryText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: Colors.textPrimary,
   },
 });

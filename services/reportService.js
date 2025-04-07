@@ -7,29 +7,95 @@ import {
   query 
 } from "firebase/firestore";
 import db from "../configs/firebaseConfig";
+import * as Location from 'expo-location'; // For React Native with Expo
+// If not using Expo, you'd use the react-native-geolocation-service package instead
 
-// Function to fetch reports from Firebase
-export const fetchReports = (onSuccess, onError) => {
+export const fetchReports = async (onSuccess, onError) => {
+  // Get current device location using Expo's Location API
+  const getCurrentLocation = async () => {
+    try {
+      // Request location permissions first
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      
+      if (status !== 'granted') {
+        throw new Error('Location permission not granted');
+      }
+      
+      const location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Balanced,
+      });
+      
+      return {
+        lat: location.coords.latitude,
+        long: location.coords.longitude
+      };
+    } catch (error) {
+      console.error("Error getting device location:", error);
+      throw error;
+    }
+  };
+
+  // Calculate distance between two coordinates in km using Haversine formula
+  const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // Radius of the Earth in km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    const distance = R * c; // Distance in km
+    return distance;
+  };
+
+  let unsubscribe = () => {};
+  
   try {
+    // First get the current location
+    const userLocation = await getCurrentLocation();
+    
     // Set up a real-time listener for reports collection
     const q = query(collection(db, "reports"));
-    return onSnapshot(q, (querySnapshot) => {
-      const reportsList = [];
+    unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const allReports = [];
       querySnapshot.forEach((doc) => {
-        reportsList.push({ id: doc.id, ...doc.data() });
+        const report = { id: doc.id, ...doc.data() };
+        allReports.push(report);
       });
-      onSuccess(reportsList);
+      
+      // Filter reports within 30km of user's location
+      const nearbyReports = allReports.filter(report => {
+        // Skip reports without location data
+        if (!report.location || !report.location.lat || !report.location.long) {
+          return false;
+        }
+        
+        const distance = calculateDistance(
+          userLocation.lat, 
+          userLocation.long, 
+          report.location.lat, 
+          report.location.long
+        );
+        console.log(`Distance to report ${report.id}: ${distance} km`);
+        return distance <= 30; // Only include reports within 30km
+      });
+      
+      onSuccess(nearbyReports);
     }, (error) => {
       console.error("Error fetching reports:", error);
       Alert.alert("Error", "Failed to load reports. Please try again later.");
       onError(error);
     });
+    
   } catch (error) {
     console.error("Error setting up reports listener:", error);
     Alert.alert("Error", "Failed to load reports. Please try again later.");
     onError(error);
-    return () => {}; // Return a no-op function if setting up the listener fails
   }
+  
+  // Return the unsubscribe function to clean up the listener when needed
+  return unsubscribe;
 };
 
 // Function to update report likes
@@ -133,6 +199,112 @@ export const submitReport = async (reportData, uploadedImage) => {
     };
   } catch (error) {
     console.error('Error submitting report:', error);
+    throw error;
+  }
+};
+
+export const fetchUserReports = (userId) => {
+  return new Promise((resolve, reject) => {
+    if (!userId) {
+      reject(new Error("User ID is required"));
+      return;
+    }
+    
+    try {
+      // Query reports where userId matches the current user
+      const q = query(
+        collection(db, "reports"), 
+        where("userId", "==", userId),
+        orderBy("time", "desc")
+      );
+      
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const reportsList = [];
+        querySnapshot.forEach((doc) => {
+          reportsList.push({ id: doc.id, ...doc.data() });
+        });
+        resolve(reportsList);
+        // Note: We're not unsubscribing here to maintain real-time updates
+      }, (error) => {
+        console.error("Error fetching user reports:", error);
+        reject(error);
+      });
+      
+      // Return the unsubscribe function for optional cleanup
+      return unsubscribe;
+    } catch (error) {
+      console.error("Error setting up user reports listener:", error);
+      reject(error);
+    }
+  });
+};
+
+// Add function to create a new report
+export const createReport = async (reportData) => {
+  try {
+    const reportsRef = collection(db, "reports");
+    const docRef = await addDoc(reportsRef, {
+      ...reportData,
+      time: serverTimestamp(),
+      likes: 0,
+      comments: 0,
+      solved: false
+    });
+    return docRef.id;
+  } catch (error) {
+    console.error("Error creating report:", error);
+    throw error;
+  }
+};
+
+// Add function to update report status
+export const updateReportStatus = async (reportId, solved) => {
+  try {
+    const reportRef = doc(db, "reports", reportId);
+    await updateDoc(reportRef, {
+      solved: solved,
+      solvedAt: solved ? serverTimestamp() : null
+    });
+    return true;
+  } catch (error) {
+    console.error("Error updating report status:", error);
+    throw error;
+  }
+};
+
+// Add function to toggle like on a report
+export const toggleReportLike = async (reportId, userId, liked) => {
+  try {
+    const reportRef = doc(db, "reports", reportId);
+    const likesRef = collection(db, "reports", reportId, "likes");
+    
+    const batch = writeBatch(db);
+    
+    if (liked) {
+      // Add user to likes collection
+      batch.set(doc(likesRef, userId), {
+        userId,
+        timestamp: serverTimestamp()
+      });
+      
+      // Increment report likes count
+      batch.update(reportRef, {
+        likes: increment(1)
+      });
+    } else {
+      // Remove user from likes collection
+      batch.delete(doc(likesRef, userId));
+      
+      // Decrement report likes count
+      batch.update(reportRef, {
+        likes: increment(-1)
+      });
+    }
+    
+    await batch.commit();
+    return true;
+  } catch (error) {
+    console.error("Error toggling report like:", error);
     throw error;
   }
 };
