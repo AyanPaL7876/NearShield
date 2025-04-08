@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
   Image,
   TouchableOpacity,
-  StyleSheet,
   Modal,
   ScrollView,
   Linking,
@@ -12,11 +11,39 @@ import {
   Share
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { doc, getDoc } from "firebase/firestore";
+import db from "@/configs/firebaseConfig";
 import { Colors } from "@/constants/Colors";
+import { styles } from "@/styles/reportCardStyles";
+import CommentScreen from "@/components/CommentScreen"; // Adjust path as needed
 
 const NewspaperReport = ({ report, onSolvePress, currentUser }) => {
   const [showFullImage, setShowFullImage] = useState(false);
   const [showCommentsModal, setShowCommentsModal] = useState(false);
+  const [commentCount, setCommentCount] = useState(report.comments?.length || 0);
+
+  // Update comment count after adding a new comment
+  useEffect(() => {
+    if (!showCommentsModal && report.id) {
+      // Refresh comment count when modal closes
+      const fetchCommentCount = async () => {
+        try {
+          const reportRef = doc(db, 'reports', report.id);
+          const reportSnap = await getDoc(reportRef);
+          
+          if (reportSnap.exists()) {
+            const reportData = reportSnap.data();
+            const comments = reportData.comments || [];
+            setCommentCount(comments.length);
+          }
+        } catch (error) {
+          console.error("Error fetching comment count:", error);
+        }
+      };
+      
+      fetchCommentCount();
+    }
+  }, [showCommentsModal, report.id]);
 
   // Format date in newspaper style (e.g., "Monday, March 29, 2023")
   const formatNewspaperDate = (dateString) => {
@@ -99,7 +126,6 @@ ${report.description}.
     return `${report.location.lat.toFixed(5)}, ${report.location.long.toFixed(5)}`;
   };
 
-
   // Render article header
   const renderArticleHeader = () => (
     <View style={styles.articleHeader}>
@@ -164,7 +190,6 @@ ${report.description}.
     );
   };
 
-
   // Render solution details if report is solved
   const renderSolutionBox = () => (
     report.solved ? (
@@ -200,6 +225,7 @@ ${report.description}.
       >
         <MaterialIcons name="comment" size={18} color={Colors.primary} />
         <Text style={styles.compactButtonText}>
+          {commentCount > 0 ? `${commentCount}` : ""}
         </Text>
       </TouchableOpacity>
 
@@ -266,317 +292,16 @@ ${report.description}.
       {renderSolutionBox()}
       {renderCompactActionBar()}
       {renderImageModal()}
+      
+      {/* Comments Modal */}
+      <CommentScreen
+        visible={showCommentsModal}
+        onClose={() => setShowCommentsModal(false)}
+        reportId={report.id}
+        currentUser={currentUser}
+      />
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f9f7f0',
-  },
-  masthead: {
-    padding: 16,
-    backgroundColor: '#f5f5f5',
-    borderBottomWidth: 2,
-    borderBottomColor: '#000',
-    alignItems: 'center',
-  },
-  newspaperName: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 26,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    textAlign: 'center',
-  },
-  divider: {
-    height: 2,
-    backgroundColor: '#000',
-    width: '100%',
-    marginVertical: 6,
-  },
-  tagline: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 12,
-    fontStyle: 'italic',
-    textAlign: 'center',
-  },
-  editionInfo: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginTop: 8,
-  },
-  editionDate: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 12,
-  },
-  editionVolume: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 12,
-  },
-  articleHeader: {
-    padding: 16,
-  },
-  categoryContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  categoryTag: {
-    backgroundColor: Colors.primary,
-    alignSelf: 'flex-start',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    marginRight: 8,
-  },
-  categoryText: {
-    color: 'white',
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-  solvedBadge: {
-    backgroundColor: '#4CAF50',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-  },
-  solvedText: {
-    color: 'white',
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 12,
-    fontWeight: 'bold',
-    marginLeft: 4,
-  },
-  headline: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    lineHeight: 30,
-  },
-  byline: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  bylineText: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 14,
-    fontStyle: 'italic',
-  },
-  authorName: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
-  bylineDate: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 14,
-    color: '#666',
-  },
-  imageContainer: {
-    margin: 16,
-    marginTop: 0,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    overflow: 'hidden',
-  },
-  leadImage: {
-    width: '100%',
-    height: 220,
-    backgroundColor: '#f0f0f0',
-  },
-  imageCaption: {
-    padding: 8,
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 12,
-    fontStyle: 'italic',
-    textAlign: 'center',
-    backgroundColor: '#f5f5f5',
-  },
-  articleBody: {
-    padding: 16,
-  },
-  dropCap: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 36,
-    fontWeight: 'bold',
-    lineHeight: 36,
-  },
-  leadParagraph: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  bodyText: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 16,
-    lineHeight: 24,
-    marginTop: 12,
-  },
-  infoBox: {
-    margin: 16,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 4,
-    overflow: 'hidden',
-  },
-  infoBoxHeader: {
-    backgroundColor: Colors.primary,
-    padding: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  infoBoxTitle: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    color: 'white',
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginLeft: 8,
-  },
-  infoBoxContent: {
-    padding: 12,
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 14,
-    lineHeight: 20,
-  },
-  infoBoxButton: {
-    backgroundColor: Colors.primary,
-    padding: 12,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  infoBoxButtonText: {
-    color: 'white',
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontWeight: 'bold',
-    fontSize: 14,
-    marginLeft: 8,
-  },
-  solutionBox: {
-    margin: 16,
-    marginTop: 0,
-    borderWidth: 1,
-    borderColor: '#4CAF50',
-    borderRadius: 4,
-    overflow: 'hidden',
-  },
-  solutionBoxHeader: {
-    backgroundColor: '#4CAF50',
-    padding: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  solutionBoxTitle: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    color: 'white',
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginLeft: 8,
-  },
-  solutionContent: {
-    padding: 12,
-  },
-  solutionSubtitle: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginBottom: 4,
-  },
-  solutionText: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 14,
-    marginBottom: 12,
-    lineHeight: 20,
-  },
-  statusContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  statusIndicator: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#4CAF50',
-    marginRight: 8,
-  },
-  solutionTimestamp: {
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontSize: 12,
-    fontStyle: 'italic',
-    color: '#666',
-    marginTop: 8,
-    textAlign: 'right',
-  },
-  // New compact action bar
-  compactActionBar: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    padding: 12,
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
-    backgroundColor: '#f5f5f5',
-  },
-  compactButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 8,
-    borderWidth: 1,
-    borderColor: Colors.primary,
-    flexDirection: 'row',
-  },
-  compactButtonText: {
-    fontSize: 12,
-    color: Colors.primary,
-    marginLeft: 2,
-  },
-  compactResolveButton: {
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#4CAF50',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    marginLeft: 8,
-    justifyContent: 'center',
-  },
-  compactResolveText: {
-    color: 'white',
-    fontFamily: Platform.OS === 'ios' ? 'Times New Roman' : 'serif',
-    fontWeight: 'bold',
-    fontSize: 12,
-    marginLeft: 4,
-  },
-  modalBackdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.9)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  fullImage: {
-    width: '90%',
-    height: '70%',
-    backgroundColor: '#000',
-  },
-  closeButton: {
-    position: 'absolute',
-    top: 40,
-    right: 20,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default NewspaperReport;

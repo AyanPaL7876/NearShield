@@ -36,7 +36,7 @@ const ReportHeader = ({ filter, onFilterChange, categoryFilter, onCategoryFilter
   return (
     <View style={styles.header}>
       <View style={styles.headerTop}>
-        <Text style={styles.headerTitle}>Reports</Text>
+        <Text style={styles.headerTitle}>NearShield        </Text>
         <TouchableOpacity 
           style={styles.categoriesToggle}
           onPress={() => setShowCategories(!showCategories)}
