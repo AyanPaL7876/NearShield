@@ -1,98 +1,122 @@
-# 🌆 Smart City - Safety & Emergency Response System
+# 🚨 NearShield - Emergency Response App
 
-<p align="center">
-  <i>Making cities safer through AI and community collaboration</i>
-</p>
+<!-- ![NearShield Banner](https://via.placeholder.com/1200x400/1a237e/ffffff?text=NearShield+Safety+App) *(replace with actual banner image)* -->
 
-[![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactnative.dev/)
-[![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white)](https://expo.dev/)
-[![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white)](https://firebase.google.com/)
+**NearShield** is a real-time emergency assistant and reporting mobile application built using **Expo** (React Native). It aims to provide safety, emergency alerting, and crowd-sourced incident reporting features for users based on their current location..
 
-## 📱 Overview
+## ✨ Features
 
-Smart City is a mobile application that enhances urban safety through AI-powered incident reporting and emergency response. The platform connects citizens with emergency services and law enforcement agencies in real-time, creating safer communities through technology.
+### 🆘 Emergency Services Locator
+- 👮 Police Stations (Overpass API)
+- 🏥 Hospitals (Overpass API)
+- 🚒 Fire Stations (Overpass API)
+- 🚑 Ambulances (Overpass API)
+- 👨‍⚕️ Doctors (Overpass API)
 
-## ✨ Key Features
+### 🌦️ Real-time Weather
+- Current conditions (OpenWeatherMap API)
+- Severe weather alerts
 
-- 🔐 **Secure Authentication**
-  - Multi-role support (Citizens, Authorities, Admins)
-  - Firebase authentication with social login
+### 📢 Incident Reporting
+- 📸 Photo uploads (Cloudinary)
+- 📍 Map markers (Mapbox)
+- 📝 Status updates
 
-- 🚨 **Smart Incident Reporting**
-  - AI-powered severity classification
-  - Image/video upload with real-time analysis
-  - Location-based tracking
+## 🛠 Tech Stack
 
-- 🚑 **Emergency Response System**
-  - One-tap emergency assistance
-  - Real-time GPS tracking
-  - Automated dispatch and notifications
+### Frontend
+![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white)
+![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 
-- 📊 **Analytics Dashboard**
-  - Crime heatmaps and trend analysis
-  - Response time metrics
-  - Predictive risk assessment
+### Backend
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white)
 
-## 🛠️ Tech Stack
+### APIs
+![Mapbox](https://img.shields.io/badge/Mapbox-000000?style=for-the-badge&logo=mapbox&logoColor=white)
+![OpenWeatherMap](https://img.shields.io/badge/OpenWeatherMap-EE6E4E?style=for-the-badge&logo=openweathermap&logoColor=white)
+![Overpass API](https://img.shields.io/badge/Overpass_API-7EBC6F?style=for-the-badge&logo=openstreetmap&logoColor=white)
 
-- **Frontend:** React Native Expo
-- **Backend:** Firebase (Firestore, Auth, Functions)
-- **AI/ML:** OpenAI API
-- **Maps:** Google Maps Platform
-- **APIs:** Crimeometer, OpenWeatherMap, Twilio
+## 📸 Screenshots
 
-## 🚀 Getting Started
+| Feature | Preview |
+|---------|---------|
+| Emergency Map | ![Map](https://via.placeholder.com/300x600?text=Map+View) |
+| Incident Report | ![Report](https://via.placeholder.com/300x600?text=Report+Screen) |
+| Weather | ![Weather](https://via.placeholder.com/300x600?text=Weather+Data) |
 
-1. Clone the repository
+## 🚀 Installation
+
+### 1. Clone the repository:
 ```bash
-git clone https://github.com/ayanpal7876/smart-city-app
-cd smart-city-app
+git clone https://github.com/yourusername/NearShield.git
+cd NearShield
 ```
 
-2. Install dependencies
+### 2. Install dependencies
 ```bash
+# Using npm
 npm install
+
+# OR using Yarn
+yarn install
 ```
 
-3. Configure environment variables
+### 3. Environment Setup
+#### Edit the .env file with your credentials:
 ```bash
-cp .env.example .env
-# Update .env with your API keys
-```
+# Mapbox Configuration
+MAPBOX_API_KEY=your_mapbox_public_key
 
-4. Start the development server
-```bash
-npx expo start
-```
-
-## ⚙️ Environment Setup
-
-Create a `.env` file with the following:
-
-```env
-# Firebase
-FIREBASE_API_KEY=your_key
-FIREBASE_AUTH_DOMAIN=your_domain
+# Firebase Configuration
+FIREBASE_API_KEY=your_firebase_api_key
+FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
 FIREBASE_PROJECT_ID=your_project_id
+FIREBASE_STORAGE_BUCKET=your_bucket.appspot.com
+FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+FIREBASE_APP_ID=your_app_id
 
-# APIs
-OPENAI_API_KEY=your_key
-GOOGLE_MAPS_API_KEY=your_key
-CRIMEOMETER_API_KEY=your_key
-TWILIO_ACCOUNT_SID=your_sid
+# OpenWeatherMap API
+OPENWEATHER_API_KEY=your_weather_api_key
+
+# Cloudinary Configuration
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_UPLOAD_PRESET=your_upload_preset
 ```
 
-## 🤝 Contributing
+### 4. Run the Application
+```bash
+# Start the development server
+expo start
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+# For Android
+expo start --android
+```
+
+## 🧪 Testing the App
+### Run Unit Tests
+```bash
+npm test
+```
+### Test on Physical Device
+#### 1. Install Expo Go app on your phone
+
+#### 2. Scan the QR code from the terminal
+
+#### 3. Make sure your phone and computer are on same network
+
+### Test on Emulator
+```bash
+# For Android
+expo start --android
+```
 
 
----
+## 📱 Supported Platforms
+- Android 10.0+ 
 
-<p align="center">
-  Made with ❤️ for safer cities
-</p>
+
+## 🙏 Acknowledgments
+- Mapbox for mapping services
+- Firebase for backend support
+<!-- - OpenStreetMap for location data -->

@@ -11,7 +11,7 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import { ThemedText } from "@/components/ThemedText";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get("window");
 
@@ -21,6 +21,8 @@ export default function SplashScreen({ onAnimationEnd }) {
   const translateY = useSharedValue(0);
   const bgScale = useSharedValue(0);
   const dotScale = useSharedValue(0);
+  const logoRotate = useSharedValue(0);
+  const shieldPulse = useSharedValue(1);
 
   useEffect(() => {
     // Background circle animation
@@ -28,6 +30,20 @@ export default function SplashScreen({ onAnimationEnd }) {
       duration: 1000,
       easing: Easing.bezier(0.25, 0.1, 0.25, 1),
     });
+
+    // Logo rotation animation
+    logoRotate.value = withSequence(
+      withTiming(360, { duration: 1500, easing: Easing.elastic(1) }),
+      withTiming(0, { duration: 0 }) // Reset for potential reuse
+    );
+
+    // Shield pulse animation
+    shieldPulse.value = withSequence(
+      withTiming(1.1, { duration: 500, easing: Easing.ease }),
+      withTiming(1, { duration: 500, easing: Easing.ease }),
+      withTiming(1.05, { duration: 300, easing: Easing.ease }),
+      withTiming(1, { duration: 300, easing: Easing.ease })
+    );
 
     // Icon and text animations
     scale.value = withSequence(
@@ -51,18 +67,9 @@ export default function SplashScreen({ onAnimationEnd }) {
       withDelay(1500, withTiming(-50, { duration: 500 }))
     );
 
-    // Decorative dots animation
-    dotScale.value = withDelay(
-      600,
-      withSpring(1, {
-        damping: 12,
-        stiffness: 100,
-      })
-    );
-
     // Hide splash screen after animation
     const timeout = setTimeout(() => {
-      onAnimationEnd(); // Notify parent to hide the splash screen
+      onAnimationEnd();
     }, 3300);
 
     return () => clearTimeout(timeout);
@@ -78,26 +85,38 @@ export default function SplashScreen({ onAnimationEnd }) {
     opacity: interpolate(bgScale.value, [0, 1], [0, 0.15]),
   }));
 
-  const dotStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: dotScale.value }],
-    opacity: interpolate(dotScale.value, [0, 1], [0, 0.3]),
+  const logoStyle = useAnimatedStyle(() => ({
+    transform: [
+      { rotate: `${logoRotate.value}deg` },
+      { scale: shieldPulse.value }
+    ],
   }));
 
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.backgroundCircle, bgStyle]} />
-      <Animated.View style={[styles.decorativeDots, dotStyle]} />
-
+      
       <Animated.View style={[styles.content, containerStyle]}>
-        <View style={styles.iconContainer}>
-          <MaterialCommunityIcons
-            name="city-variant"
-            size={80}
-            color="#4285F4"
-          />
-        </View>
+        <Animated.View style={[styles.logoContainer, logoStyle]}>
+          <View style={styles.shieldOutline}>
+            <FontAwesome5
+              name="shield-alt"
+              size={80}
+              color="#4285F4"
+              style={styles.shadow}
+            />
+          </View>
+          <View style={styles.iconCenter}>
+            <MaterialCommunityIcons
+              name="police-badge"
+              size={40}
+              color="#FFFFFF"
+            />
+          </View>
+        </Animated.View>
+        
         <ThemedText style={styles.title}>NearShield</ThemedText>
-        <ThemedText style={styles.subtitle}>Safety & Security</ThemedText>
+        <ThemedText style={styles.subtitle}>Emergency & LocalNews</ThemedText>
       </Animated.View>
     </View>
   );
@@ -118,44 +137,59 @@ const styles = StyleSheet.create({
     backgroundColor: "#4285F4",
     opacity: 0.15,
   },
-  decorativeDots: {
-    position: "absolute",
-    width: width,
-    height: height,
-    opacity: 0.3,
-  },
   content: {
     alignItems: "center",
     justifyContent: "center",
     zIndex: 2,
   },
-  iconContainer: {
+  logoContainer: {
+    position: 'relative',
     width: width * 0.35,
     height: width * 0.35,
-    backgroundColor: "rgba(66, 133, 244, 0.1)",
-    borderRadius: width * 0.175,
+    marginBottom: 25,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 20,
-    shadowColor: "#4285F4",
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.2,
-    shadowRadius: 12,
-    elevation: 10,
+  },
+  shieldOutline: {
+    position: 'absolute',
+  },
+  iconCenter: {
+    position: 'absolute',
+    backgroundColor: '#4285F4',
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  shadow: {
+    textShadowColor: 'rgba(0, 0, 0, 0.2)',
+    textShadowOffset: { width: 0, height: 4 },
+    textShadowRadius: 8,
   },
   title: {
     fontSize: 36,
+    fontWeight: "bold",
     fontFamily: "Poppins-Bold",
     color: "#333",
     textAlign: "center",
-    paddingTop: 18,
+    padding:5,
     marginBottom: 8,
+    textShadowColor: 'rgba(0, 0, 0, 0.1)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
   },
   subtitle: {
-    fontSize: 18,
-    fontFamily: "Poppins-Regular",
+    fontSize: 16,
+    fontFamily: "Poppins-Medium",
     color: "#666",
     textAlign: "center",
-    opacity: 0.8,
+    opacity: 0.9,
+    letterSpacing: 0.5,
   },
 });
