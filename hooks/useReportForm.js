@@ -6,6 +6,8 @@ import { Alert } from 'react-native';
 import { requestLocationPermission, getCurrentLocation } from '../services/locationService';
 import { submitReport } from '../services/reportService';
 import * as ImagePicker from 'expo-image-picker';
+import { addAlertPoint } from '../services/alertPointService';
+import { addReportForUser } from '../services/userService';
 
 export const useReportForm = (user) => {
   const [title, setTitle] = useState('');
@@ -75,6 +77,9 @@ export const useReportForm = (user) => {
     
     try {
       setLoading(true);
+      // uplode alert point
+      const alertpointID = await addAlertPoint(coordinates.long, coordinates.lat);
+
       
       // Prepare report data
       const reportData = {
@@ -88,10 +93,15 @@ export const useReportForm = (user) => {
           verified: true
         },
         location: coordinates,
+        alertpointID,
       };
       
       // Submit report with image if available
       const result = await submitReport(reportData, uploadedImage);
+      
+      //add report id to usersreports
+      await addReportForUser(user?.id, result.reportId);
+      console.log('Title:', result.reportId);
       
       // Reset form on success
       setTitle('');

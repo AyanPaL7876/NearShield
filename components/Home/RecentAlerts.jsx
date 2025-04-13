@@ -5,7 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 const RecentAlerts = () => {
   return (
-    <View style={section}>
+    <View style={[section, { paddingVertical: 20 }]}>
       <Text style={sectionTitle}>Recent Alerts</Text>
       <View style={styles.cards}>
 

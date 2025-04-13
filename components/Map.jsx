@@ -5,10 +5,10 @@ import MapboxGL, { Camera, LocationPuck, MapView, ShapeSource, SymbolLayer, Imag
 import * as Location from 'expo-location';
 import Mapbox from '@rnmapbox/maps';
 import { featureCollection, point } from '@turf/helpers';
-import alertPoint from '../data/alertPoint.json';
 import alertPin from '../assets/images/alert.png';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
+import { getAlertPoints } from '../services/alertPointService';
 
 const Map = () => {
   const params = useLocalSearchParams();
@@ -19,14 +19,11 @@ const Map = () => {
   const [userLocation, setUserLocation] = useState(null);
   const [initialized, setInitialized] = useState(false);
   const [focusedReport, setFocusedReport] = useState(null);
-
-  // Default points from your JSON file
-  const defaultPoints = alertPoint.map(alert => point([alert.long, alert.lat]));
   
   // Add the specific report point if provided in params
-  const [allPoints, setAllPoints] = useState(defaultPoints);
+  const [allPoints, setAllPoints] = useState([]);
 
-  useEffect(() => {
+  useEffect(async() => {
     const initializeMap = async () => {
       try {
         Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_API_KEY);
@@ -36,6 +33,16 @@ const Map = () => {
         console.error('Error initializing map:', error);
       }
     };
+
+    await getAlertPoints(
+      (points) => {
+        const newPoints = points.map(alert => point([alert.long, alert.lat], { id: alert.id }));
+        setAllPoints(prev => [...prev, ...newPoints]);
+      },
+      (error) => { 
+        console.error('Error fetching alert points:', error);
+      }
+    );
 
     initializeMap();
   }, []);

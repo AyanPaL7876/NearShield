@@ -44,9 +44,9 @@ const Header = () => {
             <Text style={styles.userName}>{user?.firstName || "User"}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.notificationButton}>
+        {/* <TouchableOpacity style={styles.notificationButton}>
           <Ionicons name="notifications" size={24} color={Colors.black} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
     </View>
   )
 }

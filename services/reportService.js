@@ -4,10 +4,13 @@ import {
   doc, 
   updateDoc, 
   onSnapshot,
-  query 
+  query ,
+  serverTimestamp,
+  addDoc
 } from "firebase/firestore";
 import db from "../configs/firebaseConfig";
 import * as Location from 'expo-location'; // For React Native with Expo
+import {uploadImageToCloudinary} from "./cloudinaryService"; // Assuming you have a cloudinaryService for image uploads
 // If not using Expo, you'd use the react-native-geolocation-service package instead
 
 export const fetchReports = async (onSuccess, onError) => {
@@ -77,7 +80,6 @@ export const fetchReports = async (onSuccess, onError) => {
           report.location.lat, 
           report.location.long
         );
-        console.log(`Distance to report ${report.id}: ${distance} km`);
         return distance <= 30; // Only include reports within 30km
       });
       
@@ -305,6 +307,88 @@ export const toggleReportLike = async (reportId, userId, liked) => {
     return true;
   } catch (error) {
     console.error("Error toggling report like:", error);
+    throw error;
+  }
+};
+
+
+
+
+// Update an existing report
+export const updateReport = async (reportId, data) => {
+  try {
+    const reportRef = doc(db, "reports", reportId);
+    await updateDoc(reportRef, data);
+    return true;
+  } catch (error) {
+    console.error("Error updating report:", error);
+    throw error;
+  }
+};
+
+// Toggle report status (solved/unsolved)
+export const toggleReportStatus = async (reportId, currentStatus) => {
+  try {
+    const reportRef = doc(db, "reports", reportId);
+    await updateDoc(reportRef, {
+      solved: !currentStatus
+    });
+    return !currentStatus;
+  } catch (error) {
+    console.error("Error toggling report status:", error);
+    throw error;
+  }
+};
+
+// Delete a report and its associated image
+export const deleteReport = async (reportId, imagePath) => {
+  try {
+    // First delete the image if it exists
+    // if (imagePath) {
+    //   // const storage = getStorage();
+    //   const imageRef = ref(storage, imagePath);
+    //   try {
+    //     await deleteObject(imageRef);
+    //   } catch (imageError) {
+    //     console.log("Error deleting image:", imageError);
+    //     // Continue with document deletion even if image deletion fails
+    //   }
+    // }
+    
+    // delete alertpoint
+    if(reportId.alertpointID){
+      await deleteAlertPoint(reportId.alertpointID);
+    }
+
+    //delete report from usersreports
+    const userReportsRef = collection(db, "users", reportId.userId, "reports");
+    const userReportDocRef = doc(userReportsRef, reportId.id);
+    await deleteDoc(userReportDocRef);
+
+    // Then delete the document
+    const reportRef = doc(db, "reports", reportId);
+    await deleteDoc(reportRef);
+    return true;
+  } catch (error) {
+    console.error("Error deleting report:", error);
+    throw error;
+  }
+};
+
+// Upload an image to Firebase Storage
+export const uploadReportImage = async (uri, reportId) => {
+  if (!uri) return null;
+  
+  try {
+    await uploadImageToCloudinary(uri).then((response) => {
+      console.log("Image uploaded successfully:", response.secure_url);
+    }
+    ).catch((error) => {
+      console.error("Error uploading image:", error);
+    });
+    return { url: downloadUrl, path: imagePath };
+  } catch (error) {
+    console.error("Error uploading image:", error);
     throw error;
   }
 };

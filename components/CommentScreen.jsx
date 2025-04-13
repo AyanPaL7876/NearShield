@@ -30,7 +30,6 @@ const CommentScreen = ({ visible, onClose, reportId, currentUser }) => {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    console.log("currentUser", currentUser);
     if (visible && reportId) {
       fetchComments();
     }

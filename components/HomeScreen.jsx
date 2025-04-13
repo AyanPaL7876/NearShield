@@ -40,7 +40,7 @@ const HomeScreen = () => {
 
         {/* Data Analytics Section - Only shown to authorities */}
         {/* {isAuthority && ( */}
-        <DataAnalytics />
+        {/* <DataAnalytics /> */}
         {/* )} */}
 
         {/* Recent Alerts Section */}

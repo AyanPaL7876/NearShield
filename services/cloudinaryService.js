@@ -1,9 +1,11 @@
 // cloudinaryService.js
 // Handles image uploads to Cloudinary
 
-const uploadImageToCloudinary = async (uri) => {
+
+export const uploadImageToCloudinary = async (uri) => {
     try {
       const formData = new FormData();
+      const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
   
       const filename = uri.split('/').pop();
       const match = /\.(\w+)$/.exec(filename ?? '');
@@ -18,7 +20,7 @@ const uploadImageToCloudinary = async (uri) => {
       formData.append('upload_preset', 'my_preset');  // Replace with your actual preset
       formData.append('cloud_name', 'dlkqamlap');
   
-      const response = await fetch('https://api.cloudinary.com/v1_1/dlkqamlap/image/upload', {
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
         method: 'POST',
         body: formData,
         headers: {
@@ -40,5 +42,7 @@ const uploadImageToCloudinary = async (uri) => {
       throw error;
     }
   };
-  
-  export default uploadImageToCloudinary;
+
+
+//deleteImageFromCloudinary.js
+// Handles image deletions from Cloudinary
