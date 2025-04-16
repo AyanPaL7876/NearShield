@@ -6,6 +6,7 @@ import LoginScreen from "../components/LoginScreen";
 import SplashScreen from "../components/SplashScreen";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as SecureStore from "expo-secure-store";
+import { View, Text } from "react-native"; // Added Text import
 
 const tokenCache = {
   async getToken(key) {
@@ -28,7 +29,7 @@ const tokenCache = {
 };
 
 export default function RootLayout() {
-  useFonts({
+  const [fontsLoaded] = useFonts({
     "outfit": require("@/assets/fonts/Poppins-Regular.ttf"),
     "outfit-medium": require("@/assets/fonts/Poppins-Medium.ttf"),
     "outfit-bold": require("@/assets/fonts/Poppins-Bold.ttf"),
@@ -43,22 +44,20 @@ export default function RootLayout() {
     );
   }
 
+  if (!fontsLoaded || isSplashVisible) {
+    return <SplashScreen onAnimationEnd={() => setIsSplashVisible(false)} />;
+  }
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-      {isSplashVisible ? (
-        <SplashScreen onAnimationEnd={() => setIsSplashVisible(false)} />
-      ) : (
-        <>
-          <SignedIn>
-            <Slot /> {/* Ensure Slot is rendered */}
-          </SignedIn>
-          <SignedOut>
-            <LoginScreen />
-          </SignedOut>
-        </>
-      )}
-    </ClerkProvider>
+      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+        <SignedIn>
+          <Slot />
+        </SignedIn>
+        <SignedOut>
+          <LoginScreen />
+        </SignedOut>
+      </ClerkProvider>
     </GestureHandlerRootView>
   );
 }

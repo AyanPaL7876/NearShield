@@ -77,9 +77,12 @@ export const fetchReports = async (onSuccess, onError) => {
         const distance = calculateDistance(
           userLocation.lat, 
           userLocation.long, 
+          // 22.7379, 
+          // 88.468216, 
           report.location.lat, 
           report.location.long
         );
+        console.log("Distance to report:", distance, "km");
         return distance <= 30; // Only include reports within 30km
       });
       

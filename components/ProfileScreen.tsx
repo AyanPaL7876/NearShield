@@ -1,40 +1,61 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   View, 
   StyleSheet, 
-  Image, 
   ScrollView, 
-  TouchableOpacity, 
   Linking, 
   RefreshControl,
   Animated,
   Easing,
-  Alert
+  Alert,
+  StatusBar
 } from 'react-native';
 import { useUser, useAuth } from '@clerk/clerk-expo';
 import { useRouter } from 'expo-router';
 import { Colors } from '../constants/Colors';
-import { Ionicons, MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
-import { Text, Button, Card, Divider, Avatar, Badge, Chip, ActivityIndicator } from 'react-native-paper';
+import { Ionicons } from '@expo/vector-icons';
+import { Text, Button, ActivityIndicator } from 'react-native-paper';
 import * as Location from 'expo-location';
 import { updateReportStatus } from '../services/reportService';
 import { getUserReports } from '../services/userService';
-import { formatDate, calculateAverageResponseTime } from './Profile/dateUtils';
+import { calculateAverageResponseTime } from './Profile/dateUtils';
 import ProfileCard from './Profile/ProfileCard';
 import ReportCard from './Profile/ReportCard';
 
-const ProfileScreen = () => {
+// Type definitions
+type Report = {
+  id: string;
+  solved: boolean;
+  likes?: number;
+  // Add other report properties as needed
+};
+
+type LocationCoords = {
+  latitude: number;
+  longitude: number;
+  // Add other coordinate properties if needed
+};
+
+type AddressData = {
+  street?: string;
+  city?: string;
+  region?: string;
+  postalCode?: string;
+  country?: string;
+};
+
+const ProfileScreen: React.FC = () => {
   const { user } = useUser();
   const { signOut } = useAuth();
   const router = useRouter();
   
-  // State variables
-  const [location, setLocation] = useState(null);
-  const [address, setAddress] = useState('Fetching location...');
-  const [reports, setReports] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
-  const [unsubscribeReports, setUnsubscribeReports] = useState(null);
+  // State variables with types
+  const [location, setLocation] = useState<LocationCoords | null>(null);
+  const [address, setAddress] = useState<string>('Fetching location...');
+  const [reports, setReports] = useState<Report[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [unsubscribeReports, setUnsubscribeReports] = useState<(() => void) | null>(null);
   
   // Animation states
   const fadeAnim = useState(new Animated.Value(0))[0];
@@ -48,7 +69,7 @@ const ProfileScreen = () => {
   useEffect(() => {
     const initialize = async () => {
       setLoading(true);
-      fetchUserLocation();
+      await fetchUserLocation();
       
       try {
         if (user?.id) {
@@ -91,7 +112,7 @@ const ProfileScreen = () => {
     ]).start();
   };
 
-  const fetchUserLocation = async () => {
+  const fetchUserLocation = async (): Promise<void> => {
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
@@ -110,7 +131,7 @@ const ProfileScreen = () => {
       });
       
       if (addressResponse?.length > 0) {
-        const addressData = addressResponse[0];
+        const addressData: AddressData = addressResponse[0];
         const formattedAddress = [
           addressData.street,
           addressData.city,
@@ -126,7 +147,7 @@ const ProfileScreen = () => {
     }
   };
 
-  const onRefresh = async () => {
+  const onRefresh = async (): Promise<void> => {
     setRefreshing(true);
     try {
       await fetchUserLocation();
@@ -142,7 +163,7 @@ const ProfileScreen = () => {
     }
   };
 
-  const handleLogout = async () => {
+  const handleLogout = async (): Promise<void> => {
     try {
       if (typeof unsubscribeReports === 'function') {
         unsubscribeReports();
@@ -155,17 +176,16 @@ const ProfileScreen = () => {
     }
   };
 
-  const openMap = () => {
+  const openMap = (): void => {
     if (location) {
       const url = `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`;
       Linking.openURL(url);
     }
   };
 
-  const toggleReportStatus = async (reportId, currentStatus) => {
+  const toggleReportStatus = async (reportId: string, currentStatus: boolean): Promise<void> => {
     try {
       await updateReportStatus(reportId, !currentStatus);
-      // Update local state immediately for a more responsive UI
       setReports(prevReports => 
         prevReports.map(report => 
           report.id === reportId ? {...report, solved: !currentStatus} : report
@@ -176,6 +196,19 @@ const ProfileScreen = () => {
       Alert.alert("Error", "Failed to update report status.");
     }
   };
+
+  // Loading Screen
+  if (loading) {
+    return (
+      <View style={styles.loadingScreen}>
+        <StatusBar backgroundColor={Colors.primary} />
+        <View style={styles.loadingContent}>
+          <ActivityIndicator size="large" color={Colors.primary} />
+          <Text style={styles.loadingScreenText}>Loading your profile...</Text>
+        </View>
+      </View>
+    );
+  }
 
   return (
     <Animated.ScrollView 
@@ -207,12 +240,13 @@ const ProfileScreen = () => {
           stats={{
             reportsCount: reports.length,
             solvedReports,
-            totalLikes
+            totalLikes,
+            averageResponseTime
           }}
           location={location}
           address={address}
           onOpenMap={openMap}
-          onEditProfile={() => router.push('/edit-profile')}
+          onEditProfile={'/edit-profile'}
           onLogout={handleLogout}
         />
       </Animated.View>
@@ -229,12 +263,7 @@ const ProfileScreen = () => {
           <Text variant="titleLarge" style={styles.sectionTitle}>My Reports</Text>
         </View>
         
-        {loading ? (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color={Colors.primary} />
-            <Text style={styles.loadingText}>Loading your reports...</Text>
-          </View>
-        ) : reports.length === 0 ? (
+        {reports.length === 0 ? (
           <View style={styles.emptyStateContainer}>
             <Ionicons name="document-text-outline" size={50} color={Colors.primaryLight} />
             <Text style={styles.emptyStateText}>You haven't created any reports yet</Text>
@@ -322,7 +351,24 @@ const styles = StyleSheet.create({
   },
   createReportButtonText: {
     color: Colors.primary,
-  }
+  },
+  // Loading screen styles
+  loadingScreen: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingContent: {
+    alignItems: 'center',
+    padding: 20,
+  },
+  loadingScreenText: {
+    marginTop: 20,
+    fontSize: 16,
+    color: Colors.primary,
+    fontWeight: '500',
+  },
 });
 
 export default ProfileScreen;
