@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "Smart City",
-    "slug": "smart-city",
+    "name": "NearShild",
+    "slug": "nearshild",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "smartcity",
+    "scheme": "NearShild",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.yourcompany.smartcity",
+      "bundleIdentifier": "com.yourcompany.nearshild",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Show current location on map."
       }
@@ -77,7 +77,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "16fdd3f4-d7aa-44fd-9895-ce33a2255ccf"
+        "projectId": "b7149d09-e709-42ee-baa7-80e4edec0c37"
       }
     },
     "owner": "ayanpal7876"
