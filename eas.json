@@ -1,32 +1,63 @@
 {
   "cli": {
-    "version": ">= 15.0.12",
-    "appVersionSource": "remote"
+    "version": ">= 3.0.0"
   },
   "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
     "preview": {
-      "distribution": "internal",
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease",
+        "env": {
+          "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_test_ZW5nYWdlZC1raXdpLTguY2xlcmsuYWNjb3VudHMuZGV2JA",
+          "EXPO_PUBLIC_MAPBOX_API_KEY": "pk.eyJ1IjoibWFoZWVwMTIiLCJhIjoiY203aHNldTZkMDhobjJ3cHNmemcwOGJlNCJ9.hMNgF_YZIDPh9de1B-4HnQ",
+          "MAPBOX_DOWNLOADS_TOKEN": "sk.eyJ1IjoibWFoZWVwMTIiLCJhIjoiY205dGpkcHF1MGRvdTJsczZrem5sMmU0biJ9.cVz2aCjppai5Q1CJW21B0g"
+        }
+      },
+      "env": {
+        "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_test_ZW5nYWdlZC1raXdpLTguY2xlcmsuYWNjb3VudHMuZGV2JA",
+        "EXPO_PUBLIC_MAPBOX_API_KEY": "pk.eyJ1IjoibWFoZWVwMTIiLCJhIjoiY203aHNldTZkMDhobjJ3cHNmemcwOGJlNCJ9.hMNgF_YZIDPh9de1B-4HnQ",
+        "MAPBOX_DOWNLOADS_TOKEN": "sk.eyJ1IjoibWFoZWVwMTIiLCJhIjoiY205dGpkcHF1MGRvdTJsczZrem5sMmU0biJ9.cVz2aCjppai5Q1CJW21B0g",
+        "EXPO_PUBLIC_OPENWEATHERMAP_API_KEY": "b2ae820130bb071f1e52ee62c666c89b",
+        "EXPO_PUBLIC_GEOAPIFY_PLACES_API_URL": "8214d5f690e241f49e27971fac907a65",
+        "EXPO_PUBLIC_FIREBASE_API_KEY": "AIzaSyBb2Na1TTl1cFUjj6qjPBdHyW6aTBaBJGE",
+        "EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN": "nearshield.firebaseapp.com",
+        "EXPO_PUBLIC_FIREBASE_PROJECT_ID": "nearshield",
+        "EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET": "nearshield.firebasestorage.app",
+        "EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "51898392220",
+        "EXPO_PUBLIC_FIREBASE_APP_ID": "1:51898392220:web:1239e0425252a30591d759",
+        "EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID": "G-HZGR5CBCNC",
+        "EXPO_PUBLIC_CLOUDINARY_API_KEY": "658448143736264",
+        "EXPO_PUBLIC_CLOUDINARY_API_SECRET": "8aIUaD3ZVVO1n4G81S0Q8oYORto",
+        "EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME": "dlkqamlap"
       }
-    },
-    "preview2": {
-      "android": {
-        "gradleCommand": ":app:assembleRelease"
-      }
-    },
-    "preview3": {
-      "developmentClient": true
-    },
-    "preview4": {
-      "distribution": "internal"
     },
     "production": {
-      "autoIncrement": true
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease",
+        "env": {
+          "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_test_ZW5nYWdlZC1raXdpLTguY2xlcmsuYWNjb3VudHMuZGV2JA",
+          "EXPO_PUBLIC_MAPBOX_API_KEY": "pk.eyJ1IjoibWFoZWVwMTIiLCJhIjoiY203aHNldTZkMDhobjJ3cHNmemcwOGJlNCJ9.hMNgF_YZIDPh9de1B-4HnQ",
+          "MAPBOX_DOWNLOADS_TOKEN": "sk.eyJ1IjoibWFoZWVwMTIiLCJhIjoiY205dGpkcHF1MGRvdTJsczZrem5sMmU0biJ9.cVz2aCjppai5Q1CJW21B0g"
+        }
+      },
+      "env": {
+        "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_test_ZW5nYWdlZC1raXdpLTguY2xlcmsuYWNjb3VudHMuZGV2JA",
+        "EXPO_PUBLIC_MAPBOX_API_KEY": "pk.eyJ1IjoibWFoZWVwMTIiLCJhIjoiY203aHNldTZkMDhobjJ3cHNmemcwOGJlNCJ9.hMNgF_YZIDPh9de1B-4HnQ",
+        "MAPBOX_DOWNLOADS_TOKEN": "sk.eyJ1IjoibWFoZWVwMTIiLCJhIjoiY205dGpkcHF1MGRvdTJsczZrem5sMmU0biJ9.cVz2aCjppai5Q1CJW21B0g",
+        "EXPO_PUBLIC_OPENWEATHERMAP_API_KEY": "b2ae820130bb071f1e52ee62c666c89b",
+        "EXPO_PUBLIC_GEOAPIFY_PLACES_API_URL": "8214d5f690e241f49e27971fac907a65",
+        "EXPO_PUBLIC_FIREBASE_API_KEY": "AIzaSyBb2Na1TTl1cFUjj6qjPBdHyW6aTBaBJGE",
+        "EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN": "nearshield.firebaseapp.com",
+        "EXPO_PUBLIC_FIREBASE_PROJECT_ID": "nearshield",
+        "EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET": "nearshield.firebasestorage.app",
+        "EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID": "51898392220",
+        "EXPO_PUBLIC_FIREBASE_APP_ID": "1:51898392220:web:1239e0425252a30591d759",
+        "EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID": "G-HZGR5CBCNC",
+        "EXPO_PUBLIC_CLOUDINARY_API_KEY": "658448143736264",
+        "EXPO_PUBLIC_CLOUDINARY_API_SECRET": "8aIUaD3ZVVO1n4G81S0Q8oYORto",
+        "EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME": "dlkqamlap"
+      }
     }
   },
   "submit": {

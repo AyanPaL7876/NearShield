@@ -276,7 +276,7 @@ const Map = () => {
       {focusedReport && (
         <View style={styles.infoPanel}>
           <View style={styles.infoPanelHeader}>
-            <MaterialIcons name="location-on" size={20} color={Colors.danger} />
+            <MaterialIcons name="location-on" size={20} color={Colors.denger} />
             <Text style={styles.infoPanelTitle}>{focusedReport.title}</Text>
           </View>
           <Text style={styles.infoPanelCoordinates}>
